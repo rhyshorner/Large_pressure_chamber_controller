@@ -5,7 +5,7 @@ import datetime
 
 import pifacedigitalio
 
-pifacedigital = pifacedigitalio.PiFaceDigital()
+pifacedigital = pifacedigitalio.PiFaceDigital() # creates instance
 
 pifacedigital.output_pins[4].turn_on() # turns output pin 4 to HIGH
 

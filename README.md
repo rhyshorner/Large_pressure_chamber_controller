@@ -9,3 +9,6 @@ Raspberry Pi 3 model B V1.2
     - FCC ID: 2ABCB-RPI32
     - IC: 20953-RPI32
 
+LIBRARIES NEED TO INSTALL;
+    -
+

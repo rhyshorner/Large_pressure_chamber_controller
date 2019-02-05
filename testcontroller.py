@@ -3,9 +3,9 @@ import time
 from time import sleep
 import datetime
 
-import pifacedigitalio as pfd
+import pifacedigitalio as p
 
-pfd.init()
+p.init()
 #--------------------------------------------------------------
 while True:
     p.digital_write(0, 1)

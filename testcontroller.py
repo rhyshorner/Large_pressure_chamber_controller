@@ -3,7 +3,7 @@ import time
 from time import sleep
 import datetime
 
-import pifacedigitalio
+import pifacedigitalio as pfd
 
 # -------CONSTANTS--------------------------------------------------
 # INPUTS
@@ -34,15 +34,20 @@ DRAIN_LED = 7
 
 #----------------------------------------------------------------
 # -initializing pifaceddgitialio
-pifacedigital = pifacedigitalio.PiFaceDigital() # creates instance
-pifacedigital.init()
+#pifacedigital = pifacedigitalio.PiFaceDigital() # creates instance
+pfd.init()
 
 #--------------------------------------------------------------
 #blink output 4
-while True:
-    pifacedigital.pifacedigital.output_pins[4].turn_on() # turns output pin 4 to HIGH
-    sleep(1)
-    pifacedigital.pifacedigital.output_pins[4].turn_off() # turns output pin 4 to HIGH
-    sleep(1)
+try:
+    while True:
+        p.digital_write(0, 1)
+        p.digital_read(2, 3)    # writes pin0 high
+        sleep(1)
+        p.digital_write(0, 0)
+        p.digital_read(2, 3)
+        sleep(1)
+except:
+    p.deinit()
 # ----------------------------------------------------------
 

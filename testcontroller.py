@@ -40,9 +40,9 @@ pifacedigital = pifacedigitalio.PiFaceDigital() # creates instance
 #--------------------------------------------------------------
 #blink output 4
 while True:
-    pifacedigital.pifacedigital.output_pins[UNDER_PRESSURE_AUTO_LED].turn_on() # turns output pin 4 to HIGH
+    pifacedigital.pifacedigital.output_pins[4].turn_on() # turns output pin 4 to HIGH
     sleep(1)
-    pifacedigital.pifacedigital.output_pins[UNDER_PRESSURE_AUTO_LED].turn_off() # turns output pin 4 to HIGH
+    pifacedigital.pifacedigital.output_pins[4].turn_off() # turns output pin 4 to HIGH
     sleep(1)
 # ----------------------------------------------------------
 

@@ -5,6 +5,13 @@ import datetime
 
 import pifacedigitalio
 
+
+
+#----------------------------------------------------------------
+# -initializing pifaceddgitialio
+pifacedigital = pifacedigitalio.PiFaceDigital() # creates instance
+pifaceddigital.init()
+
 # -------CONSTANTS--------------------------------------------------
 # INPUTS
 OVER_PRESSURE_AUTO_SW = 0
@@ -31,11 +38,6 @@ UNDER_PRESSURE_MAN_LED = 5
 
 FILL_LED = 6
 DRAIN_LED = 7
-
-#----------------------------------------------------------------
-# -initializing pifaceddgitialio
-pifacedigital = pifacedigitalio.PiFaceDigital() # creates instance
-pifaceddigital.init()
 
 #--------------------------------------------------------------
 #blink output 4

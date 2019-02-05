@@ -5,6 +5,7 @@ import datetime
 
 import pifacedigitalio
 
+pifacedigitalio,init()
 pfd = pifacedigitalio.PiFaceDigital() # creates a PiFace Digtal object
 #--------------------------------------------------------------
 try:

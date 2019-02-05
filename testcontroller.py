@@ -10,7 +10,7 @@ import pifacedigitalio
 #----------------------------------------------------------------
 # -initializing pifaceddgitialio
 pifacedigital = pifacedigitalio.PiFaceDigital() # creates instance
-pifaceddigital.init()
+#pifacedigital.init()
 
 # -------CONSTANTS--------------------------------------------------
 # INPUTS

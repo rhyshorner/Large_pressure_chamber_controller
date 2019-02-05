@@ -5,13 +5,6 @@ import datetime
 
 import pifacedigitalio
 
-
-
-#----------------------------------------------------------------
-# -initializing pifaceddgitialio
-pifacedigital = pifacedigitalio.PiFaceDigital() # creates instance
-#pifacedigital.init()
-
 # -------CONSTANTS--------------------------------------------------
 # INPUTS
 OVER_PRESSURE_AUTO_SW = 0
@@ -33,18 +26,23 @@ RELIEF_SOLENOID = 1
 OVER_PRESSURE_AUTO_LED = 2
 OVER_PRESSURE_MAN_LED = 3
 
-UNDER_PRESSURE_AUTO_LED = pifacedigital.output_pins[4]
+UNDER_PRESSURE_AUTO_LED = 4
 UNDER_PRESSURE_MAN_LED = 5
 
 FILL_LED = 6
 DRAIN_LED = 7
 
+#----------------------------------------------------------------
+# -initializing pifaceddgitialio
+pifacedigital = pifacedigitalio.PiFaceDigital() # creates instance
+#pifacedigital.init()
+
 #--------------------------------------------------------------
 #blink output 4
 while True:
-    pifacedigital.UNDER_PRESSURE_AUTO_LED.turn_on() # turns output pin 4 to HIGH
+    pifacedigital.pifacedigital.output_pins[UNDER_PRESSURE_AUTO_LED].turn_on() # turns output pin 4 to HIGH
     sleep(1)
-    pifacedigital.UNDER_PRESSURE_AUTO_LED.turn_off() # turns output pin 4 to HIGH
+    pifacedigital.pifacedigital.output_pins[UNDER_PRESSURE_AUTO_LED].turn_off() # turns output pin 4 to HIGH
     sleep(1)
 # ----------------------------------------------------------
 

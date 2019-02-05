@@ -20,6 +20,8 @@ try:
         pfd.input_pins[1].value
         sleep(1)
 except:
+    pfd.output_pins[1].turn_off()    # turn on/set high the second LED
+    pfd.output_pins[2].set_low()   # turn on/set high the third LED
     pfd.relays[0].value = 0  # turn on/set high the first relay
 
 

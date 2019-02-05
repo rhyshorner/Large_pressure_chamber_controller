@@ -35,7 +35,7 @@ DRAIN_LED = 7
 #----------------------------------------------------------------
 # -initializing pifaceddgitialio
 pifacedigital = pifacedigitalio.PiFaceDigital() # creates instance
-#pifacedigital.init()
+pifacedigital.init()
 
 #--------------------------------------------------------------
 #blink output 4

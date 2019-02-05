@@ -3,7 +3,7 @@ import time
 from time import sleep
 import datetime
 
-import pifacedigitalio as pfd
+import pifacedigitalio
 
 pfd = pifacedigitalio.PiFaceDigital() # creates a PiFace Digtal object
 #--------------------------------------------------------------

@@ -12,7 +12,7 @@ try:
         pfd.output_pins[1].turn_on()    # turn on/set high the second LED
         pfd.output_pins[2].set_high()   # turn on/set high the third LED
         #pfd.relays[0].value = 1  # turn on/set high the first relay
-        pfd.digital_write(0, 1)    # writes pin0 high
+        pifacedigitalio.digital_write(0, 1)    # writes pin0 high
         pfd.input_pins[1].value
         sleep(1)
         pfd.output_pins[1].turn_off()    # turn on/set high the second LED

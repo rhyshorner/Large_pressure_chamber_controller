@@ -26,7 +26,7 @@ RELIEF_SOLENOID = 1
 OVER_PRESSURE_AUTO_LED = 2
 OVER_PRESSURE_MAN_LED = 3
 
-UNDER_PRESSURE_AUTO_LED = 4
+UNDER_PRESSURE_AUTO_LED = output_pins[4]
 UNDER_PRESSURE_MAN_LED = 5
 
 FILL_LED = 6
@@ -35,13 +35,14 @@ DRAIN_LED = 7
 #----------------------------------------------------------------
 # -initializing pifaceddgitialio
 pifacedigital = pifacedigitalio.PiFaceDigital() # creates instance
+pifaceddigital.init()
 
 #--------------------------------------------------------------
 #blink output 4
 while True:
-    pifacedigital.output_pins[4].turn_on() # turns output pin 4 to HIGH
+    pifacedigital.UNDER_PRESSURE_AUTO_LED.turn_on() # turns output pin 4 to HIGH
     sleep(1)
-    pifacedigital.output_pins[4].turn_off() # turns output pin 4 to HIGH
+    pifacedigital.UNDER_PRESSURE_AUTO_LED.turn_off() # turns output pin 4 to HIGH
     sleep(1)
 # ----------------------------------------------------------
 

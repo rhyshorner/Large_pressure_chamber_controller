@@ -7,6 +7,8 @@ import pifacedigitalio
 
 pfd = pifacedigitalio.PiFaceDigital() # creates a PiFace Digtal object
 
+pump_relay_state = 0
+
 def debounce(pfd, laststate):
     #if same as last state wait until statechange
     return
@@ -15,11 +17,12 @@ def debounce(pfd, laststate):
 #try:
 while True:
 
-    pump_relay = pfd.input_pins[0].value
-    if pump_relay == 1:
-        pump_relay = not pump_relay
-    pfd.output_pins[0].value = pump_relay
-    print("pump relay switch is: " + str(pfd.input_pins[0].value))
+    pump_relay_pushbutton = pfd.input_pins[0].value
+    if pump_relay_pushbutton == 1:
+        pump_relay_state = not pump_relay_state
+    pfd.output_pins[0].value = pump_relay_state
+    print("pump relay switch is: " + str(pump_relay_pushbutton))
+    print("pump relay variable is: " + str(pump_relay_state))
 
     relief_relay = pfd.input_pins[1].value
     pfd.output_pins[1].value = relief_relay

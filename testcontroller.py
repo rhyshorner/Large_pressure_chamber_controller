@@ -9,7 +9,7 @@ pfd = pifacedigitalio.PiFaceDigital() # creates a PiFace Digtal object
 
 pump_relay_pushbutton = 0
 pump_relay_state = 0
-pump_relay_debounce = 0
+pump_relay_debounce = 1
 
 def debounce(pfd, laststate):
     #if same as last state wait until statechange
@@ -23,11 +23,11 @@ while True:
     pump_relay_pushbutton = pfd.input_pins[0].value
 
 # check current states and toggle accordingly
-    if pump_relay_pushbutton == True & pump_relay_debounce == False:
-        pump_relay_state = not pump_relay_state
-        pump_relay_debounce = True
-    elif  pump_relay_pushbutton == False:
-        pump_relay_debounce = False
+    if pump_relay_pushbutton == 1 and pump_relay_debounce == 1:
+        pump_relay_state ^= pump_relay_state
+        pump_relay_debounce = 0
+    elif pump_relay_pushbutton == 0:
+        pump_relay_debounce = 1
 
 # apply states to outputs
         pfd.output_pins[0].value = pump_relay_state

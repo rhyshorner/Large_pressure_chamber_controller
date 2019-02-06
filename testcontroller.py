@@ -14,13 +14,16 @@ def debounce(pfd, laststate):
 #--------------------------------------------------------------
 #try:
 while True:
+
     pump_relay = pfd.input_pins[0].value
+    if pump_relay == 1:
+        pump_relay = not pump_relay
     pfd.output_pins[0].value = pump_relay
-    print("input pin 1 is: " + str(pfd.input_pins[0].value))
+    print("pump relay switch is: " + str(pfd.input_pins[0].value))
 
     relief_relay = pfd.input_pins[1].value
     pfd.output_pins[1].value = relief_relay
-    print("input pin 1 is: " + str(pfd.input_pins[1].value))
+    print("relief relay is: " + str(pfd.input_pins[1].value))
 
     sleep(0.25)
 #except:

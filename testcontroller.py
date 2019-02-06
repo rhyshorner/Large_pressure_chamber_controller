@@ -29,14 +29,14 @@ while True:
 
 # check current states and toggle accordingly
     if pump_relay_pushbutton == 1 and debounce == 0:
-            pump_relay_state ^= 1
-            debounce = 1
+        pump_relay_state ^= 1
+        debounce = 1
     elif pump_relay_pushbutton == 0:
         debounce = 0
 
     if relief_relay_pushbutton == 1 and debounce == 0:
-            relief_relay_state ^= 1
-            debounce = 1
+        relief_relay_state ^= 1
+        debounce = 1
     elif relief_relay_pushbutton == 0:
         debounce = 0
 

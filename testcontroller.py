@@ -28,9 +28,9 @@ while True:
     pfd.output_pins[0].value = pump_relay_state
     print("pump relay switch is: " + str(pump_relay_pushbutton) + " pump relay variable is: " + str(pump_relay_state))
 
-    relief_relay = pfd.input_pins[1].value
-    pfd.output_pins[1].value = relief_relay
-    print("relief relay is: " + str(pfd.input_pins[1].value))
+#    relief_relay = pfd.input_pins[1].value
+#    pfd.output_pins[1].value = relief_relay
+ #   print("relief relay is: " + str(pfd.input_pins[1].value))
 #except:
 #   pfd.output_pins[0].value = 0  
 #   pfd.output_pins[1].value = 0

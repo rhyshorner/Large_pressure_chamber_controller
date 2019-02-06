@@ -21,8 +21,8 @@ while True:
 
 # read value
     pump_relay_pushbutton = pfd.input_pins[0].value
-    print("pump switch: " + str(pump_relay_pushbutton)
-    print(str(type(pump_relay_pushbutton)))
+    print("pump switch: " + str(pump_relay_pushbutton))
+    print(type(pump_relay_pushbutton))
 # check current states and toggle accordingly
     if pump_relay_pushbutton == 1 and pump_relay_debounce == 1:
         pump_relay_state ^= pump_relay_state

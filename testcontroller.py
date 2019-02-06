@@ -7,6 +7,7 @@ import pifacedigitalio
 
 pfd = pifacedigitalio.PiFaceDigital() # creates a PiFace Digtal object
 
+pump_relay_pushbutton = 0
 pump_relay_state = 0
 pump_relay_debounce = 0
 

@@ -19,15 +19,23 @@ def debounce(pfd, laststate):
 #try:
 while True:
 
+# read value
     pump_relay_pushbutton = pfd.input_pins[0].value
-    if pump_relay_debounce == 1 & pump_relay_pushbutton == 0:
-        pump_relay_debounce = 0
-    if pump_relay_pushbutton == 1 & pump_relay_debounce == 0:
-        pump_relay_state = not pump_relay_state
-        pump_relay_debounce = 1
 
-    pfd.output_pins[0].value = pump_relay_state
-    print("pump switch: " + str(pump_relay_pushbutton) + " pump var: " + str(pump_relay_state) + " pump debounce: " + str(pump_relay_debounce))
+# check current states and toggle accordingly
+    if pump_relay_pushbutton == True:
+        if pump_relay_state == True:
+            pump_relay_state = False
+        else:
+            pump_relay_state = True
+
+# apply states to outputs
+    if pump_relay_state == True:
+        pfd.output_pins[0].value = True
+        print("pump switch: " + str(pump_relay_pushbutton) + ", pump var: " + str(pump_relay_state) + ", pump debounce: " + str(pump_relay_debounce))
+    else:
+        pfd.output_pins[0].value = False
+
 
 #    relief_relay = pfd.input_pins[1].value
 #    pfd.output_pins[1].value = relief_relay

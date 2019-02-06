@@ -8,19 +8,19 @@ import pifacedigitalio
 pfd = pifacedigitalio.PiFaceDigital() # creates a PiFace Digtal object
 #--------------------------------------------------------------
 #try:
-    while True:
-        pfd.output_pins[1].turn_on()    # turn on/set high the second LED
-        pfd.output_pins[2].set_high()   # turn on/set high the third LED
+while True:
+    pfd.output_pins[1].turn_on()    # turn on/set high the second LED
+    pfd.output_pins[2].set_high()   # turn on/set high the third LED
 
-        pfd.relays[0].value = pfd.input_pins[1].value  # turn on/set high the first relay
-        print("input pin 1 is: " + pfd.input_pins[1].value)
-        sleep(1)
-        pfd.output_pins[1].turn_off()    # turn on/set high the second LED
-        pfd.output_pins[2].set_low()   # turn on/set high the third LED
+    pfd.relays[0].value = pfd.input_pins[1].value  # turn on/set high the first relay
+    print("input pin 1 is: " + pfd.input_pins[1].value)
+    sleep(1)
+    pfd.output_pins[1].turn_off()    # turn on/set high the second LED
+    pfd.output_pins[2].set_low()   # turn on/set high the third LED
 
-        pfd.relays[0].value = pfd.input_pins[1].value  # turn on/set high the first relay
-        print("input pin 1 is: " + pfd.input_pins[1].value)
-        sleep(1)
+    pfd.relays[0].value = pfd.input_pins[1].value  # turn on/set high the first relay
+    print("input pin 1 is: " + pfd.input_pins[1].value)
+    sleep(1)
 #except:
  #   pfd.output_pins[1].turn_off()    # turn on/set high the second LED
   #  pfd.output_pins[2].set_low()   # turn on/set high the third LED

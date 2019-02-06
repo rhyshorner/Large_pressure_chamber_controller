@@ -7,9 +7,12 @@ import pifacedigitalio
 
 pfd = pifacedigitalio.PiFaceDigital() # creates a PiFace Digtal object
 
-pump_relay_pushbutton = 0
+
 pump_relay_state = 0
-pump_relay_debounce = 1
+pump_relay_debounce = 0
+relief_relay_state = 0
+relief_relay_debounce = 0
+
 
 def debounce(pfd, laststate):
     #if same as last state wait until statechange
@@ -21,18 +24,27 @@ while True:
 
 # read value
     pump_relay_pushbutton = pfd.input_pins[0].value
+    relief_relay_pushbutton = pfd.input_pins[1].value
+
 # check current states and toggle accordingly
-    if pump_relay_pushbutton == 1:
-        if pump_relay_debounce == 1:
+    if pump_relay_pushbutton == 1 and pump_relay_debounce == 0:
             pump_relay_state ^= 1
-            print(str(pump_relay_state))
-            pump_relay_debounce = 0
+            pump_relay_debounce = 1
     elif pump_relay_pushbutton == 0:
-        pump_relay_debounce = 1
+        pump_relay_debounce = 0
+
+    if relief_relay_pushbutton == 1 and relief_relay_debounce == 0:
+            relief_relay_state ^= 1
+            relief_relay_debounce = 1
+    elif relief_relay_pushbutton == 0:
+        relief_relay_debounce = 0
 
 # apply states to outputs
     pfd.output_pins[0].value = pump_relay_state
- #       print("pump switch: " + str(pump_relay_pushbutton) + ", pump var: " + str(pump_relay_state) + ", pump debounce: " + str(pump_relay_debounce))
+    pfd.output_pins[1].value = relief_relay_state
+
+# debugging print
+    print("pump:" + str(pump_relay_state) + " relief:" + str(relief_relay_state))
 
 # state machine here
 #    if over_p_auto_sw == False & over_p_man_sw == False & etc etc

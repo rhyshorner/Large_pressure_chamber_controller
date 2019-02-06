@@ -85,11 +85,11 @@ while True:
         #de-flag debounce variable
         over_p_auto_sw_debounce = 0
 
-    if relief_relay_pushbutton == 1 and relief_relay_debounce == 0:
-        relief_relay_state ^= 1
-        relief_relay_debounce = 1
-    elif relief_relay_pushbutton == 0:
-        relief_relay_debounce = 0
+#    if relief_relay_pushbutton == 1 and relief_relay_debounce == 0:
+#        relief_relay_state ^= 1
+#        relief_relay_debounce = 1
+#    elif relief_relay_pushbutton == 0:
+#        relief_relay_debounce = 0
 
 # apply states to outputs
     pfd.output_pins[0].value = pump_relay_state

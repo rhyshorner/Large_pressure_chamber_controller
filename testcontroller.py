@@ -80,13 +80,16 @@ while True:
     elif over_p_auto_sw == 0:
         #de-flag debounce variable
         over_p_auto_sw_debounce = 0
-    # if wika input is 1
-    if over_p_wika == 1 and over_p_auto_sw_state == 1:
-        # energize pump relay 
-        pump_relay_state = 1
-    # else if wika input is 0
-    elif over_p_wika == 0 and over_p_auto_sw_state != 0:
-        # de-energize pump relay 
+    if over_p_auto_sw_state == 1:
+        # if wika input is 1
+        if over_p_wika == 1:
+            # energize pump relay 
+            pump_relay_state = 1
+        # else if wika input is 0
+        elif over_p_wika == 0:
+            # de-energize pump relay 
+            pump_relay_state = 0
+    elif over_p_auto_sw_state == 0 & over_p_man_sw_state != 1:
         pump_relay_state = 0
 
     if over_p_man_sw == 1 and over_p_man_sw_debounce == 0:

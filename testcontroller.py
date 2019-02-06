@@ -28,17 +28,17 @@ while True:
     relief_relay_pushbutton = pfd.input_pins[1].value
 
 # check current states and toggle accordingly
-    if pump_relay_pushbutton == 1 and debounce == 0:
-        pump_relay_state ^= 1
-        debounce = 1
+    if pump_relay_pushbutton == 1 and pump_relay_debounce == 0:
+            pump_relay_state ^= 1
+            pump_relay_debounce = 1
     elif pump_relay_pushbutton == 0:
-        debounce = 0
+        pump_relay_debounce = 0
 
-    if relief_relay_pushbutton == 1 and debounce == 0:
-        relief_relay_state ^= 1
-        debounce = 1
+    if relief_relay_pushbutton == 1 and relief_relay_debounce == 0:
+            relief_relay_state ^= 1
+            relief_relay_debounce = 1
     elif relief_relay_pushbutton == 0:
-        debounce = 0
+        relief_relay_debounce = 0
 
 # apply states to outputs
     pfd.output_pins[0].value = pump_relay_state

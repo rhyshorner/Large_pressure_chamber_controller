@@ -23,19 +23,18 @@ while True:
     pump_relay_pushbutton = pfd.input_pins[0].value
 
 # check current states and toggle accordingly
-    if pump_relay_pushbutton == True:
-        if pump_relay_state == True:
-            pump_relay_state = False
-        else:
-            pump_relay_state = True
+    if pump_relay_pushbutton == True & pump_relay_debounce == False:
+        pump_relay_state = not pump_relay_state
+        pump_relay_debounce = True
+    elif  pump_relay_pushbutton == False:
+        pump_relay_debounce = False
 
 # apply states to outputs
-    if pump_relay_state == True:
-        pfd.output_pins[0].value = True
+        pfd.output_pins[0].value = pump_relay_state
         print("pump switch: " + str(pump_relay_pushbutton) + ", pump var: " + str(pump_relay_state) + ", pump debounce: " + str(pump_relay_debounce))
-    else:
-        pfd.output_pins[0].value = False
 
+# state machine here
+#    if over_p_auto_sw == False & over_p_man_sw == False & etc etc
 
 #    relief_relay = pfd.input_pins[1].value
 #    pfd.output_pins[1].value = relief_relay

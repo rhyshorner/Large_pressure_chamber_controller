@@ -72,7 +72,7 @@ while True:
 # ------------------------------------------------------------------------
 # OVER PRESSURE AND PUMP
     if over_p_auto_sw == 1 and over_p_auto_sw_debounce == 0:
-        #turn manual switch off
+        #turn manual switch off, interlock
         over_p_man_sw_state = 0
         #toggle auto switch, either on or off
         over_p_auto_sw_state ^= 1
@@ -84,7 +84,7 @@ while True:
         over_p_auto_sw_debounce = 0
     
     if over_p_man_sw == 1 and over_p_man_sw_debounce == 0:
-        #turn auto switch off
+        #turn auto switch off, interlock
         over_p_auto_sw_state = 0
         #toggle manual switch, either on or off
         over_p_man_sw_state ^= 1
@@ -114,7 +114,7 @@ while True:
 #------------------------------------------------------------------------
 # UNDER PRESSURE AND RELIEF
     if under_p_auto_sw_state == 1 and under_p_auto_sw_debounce == 0:
-        #turn manual switch off
+        #turn manual switch off, interlock
         under_p_man_sw_state = 0
         #toggle auto switch, either on or off
         under_p_auto_sw_state ^= 1
@@ -126,7 +126,7 @@ while True:
         under_p_auto_sw_debounce = 0
     
     if under_p_man_sw == 1 and under_p_man_sw_debounce == 0:
-        #turn auto switch off
+        #turn auto switch off, interlock
         under_p_auto_sw_state = 0
         #toggle manual switch, either on or off
         under_p_man_sw_state ^= 1
@@ -158,7 +158,7 @@ while True:
     if fill_sw == 1 and fill_debounce == 0:
         #drain interlock??
         #drain_state = 0
-        #toggle auto switch, either on or off
+        #toggle fill switch, either on or off
         fill_state ^= 1
         #flag debounce variable
         fill_debounce = 1
@@ -170,7 +170,7 @@ while True:
     if drain_sw == 1 and drain_debounce == 0:
         #fill interlock??
         #fill_state = 0
-        #toggle manual switch, either on or off
+        #toggle drain switch, either on or off
         drain_state ^= 1
         #flag debounce variable
         drain_debounce = 1

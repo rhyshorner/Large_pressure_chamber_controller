@@ -48,13 +48,14 @@ relief_relay_state = 0
 #--------------------------------------------------------------
 #try:
 while True:
+    # noise filtering by adding in some counters
 # read value
     over_p_auto_sw = pfd.input_pins[0].value
     over_p_man_sw = pfd.input_pins[1].value
-    #under_p_auto_sw = pfd.input_pins[2].value
-    #under_p_man_sw = pfd.input_pins[3].value
-    over_p_wika = pfd.input_pins[2].value
-    under_p_wika = pfd.input_pins[3].value
+    under_p_auto_sw = pfd.input_pins[2].value
+    under_p_man_sw = pfd.input_pins[3].value
+    over_p_wika = pfd.input_pins[4].value
+    under_p_wika = pfd.input_pins[5].value
     fill_sw = pfd.input_pins[6].value
     drain_sw = pfd.input_pins[7].value
 
@@ -68,9 +69,8 @@ while True:
     # pin6 = fill
     # pin7 = drain
 
-
-
-# check current states and toggle accordingly
+# ------------------------------------------------------------------------
+# OVER PRESSURE AND PUMP
     if over_p_auto_sw == 1 and over_p_auto_sw_debounce == 0:
         #turn manual switch off
         over_p_man_sw_state = 0
@@ -86,17 +86,16 @@ while True:
     if over_p_man_sw == 1 and over_p_man_sw_debounce == 0:
         #turn auto switch off
         over_p_auto_sw_state = 0
-        #toggle man switch, either on or off
+        #toggle manual switch, either on or off
         over_p_man_sw_state ^= 1
         #flag debounce variable
         over_p_man_sw_debounce = 1
-        # if wika input is 1 
-        #pump_relay_state = over_p_man_sw_state
     #elif button release
     elif over_p_man_sw == 0:
         #de-flag debounce variable
         over_p_man_sw_debounce = 0
 
+# pump 
     if over_p_man_sw_state == 1:
         # energize pump relay 
         pump_relay_state = 1
@@ -111,14 +110,76 @@ while True:
             pump_relay_state = 0
     else:
         pump_relay_state = 0
+
+#------------------------------------------------------------------------
+# UNDER PRESSURE AND RELIEF
+    if under_p_auto_sw_state == 1 and under_p_auto_sw_debounce == 0:
+        #turn manual switch off
+        under_p_man_sw_state = 0
+        #toggle auto switch, either on or off
+        under_p_auto_sw_state ^= 1
+        #flag debounce variable
+        under_p_auto_sw_debounce = 1
+    #elif button release
+    elif under_p_auto_sw == 0:
+        #de-flag debounce variable
+        under_p_auto_sw_debounce = 0
     
+    if under_p_man_sw == 1 and under_p_man_sw_debounce == 0:
+        #turn auto switch off
+        under_p_auto_sw_state = 0
+        #toggle manual switch, either on or off
+        under_p_man_sw_state ^= 1
+        #flag debounce variable
+        under_p_man_sw_debounce = 1
+    #elif button release
+    elif under_p_man_sw == 0:
+        #de-flag debounce variable
+        under_p_man_sw_debounce = 0
 
-#    if relief_relay_pushbutton == 1 and relief_relay_debounce == 0:
-#        relief_relay_state ^= 1
-#        relief_relay_debounce = 1
-#    elif relief_relay_pushbutton == 0:
-#        relief_relay_debounce = 0
+# pump 
+    if under_p_man_sw_state == 1:
+        # energize pump relay 
+        relief_relay_state = 1
+    elif under_p_auto_sw_state == 1:
+        # if wika input is 1
+        if under_p_wika == 1:
+            # energize pump relay 
+            relief_relay_state = 1
+        # else if wika input is 0
+        else:
+            # de-energize pump relay 
+            relief_relay_state = 0
+    else:
+        relief_relay_state = 0
 
+# -----------------------------------------------------------------------------
+# FILL AND DRAIN
+    if fill_sw == 1 and fill_debounce == 0:
+        #drain interlock??
+        #drain_state = 0
+        #toggle auto switch, either on or off
+        fill_state ^= 1
+        #flag debounce variable
+        fill_debounce = 1
+    #elif button release
+    elif fill_sw == 0:
+        #de-flag debounce variable
+        fill_debounce = 0
+    
+    if drain_sw == 1 and drain_debounce == 0:
+        #fill interlock??
+        #fill_state = 0
+        #toggle manual switch, either on or off
+        drain_state ^= 1
+        #flag debounce variable
+        drain_debounce = 1
+    #elif button release
+    elif drain_sw == 0:
+        #de-flag debounce variable
+        drain_debounce = 0
+
+#----------------------------------------------------------------------------------
 # apply states to outputs
     pfd.output_pins[0].value = pump_relay_state
     pfd.output_pins[1].value = relief_relay_state
@@ -130,17 +191,22 @@ while True:
     pfd.output_pins[7].value = drain_state
 
 # debugging print
-    print("pump:" + str(pump_relay_state) + " relief:" + str(relief_relay_state))
-
-# state machine here
-#    if over_p_auto_sw == False & over_p_man_sw == False & etc etc
+    print("pump:" + str(pump_relay_state) 
+    + " relief:" + str(relief_relay_state) 
+    + " OP auto:" + str(over_p_auto_sw_state) 
+    + " OP man:" + str(over_p_man_sw_state) 
+    + " UP auto:" + str(under_p_auto_sw_state) 
+    + " UP man:" + str(under_p_man_sw_state) 
+    + " fill:" + str(fill_state) 
+    + " drain:" + str(drain_state)
+    )
 
 #    relief_relay = pfd.input_pins[1].value
 #    pfd.output_pins[1].value = relief_relay
- #   print("relief relay is: " + str(pfd.input_pins[1].value))
+#    print("relief relay is: " + str(pfd.input_pins[1].value))
 #except:
-#   pfd.output_pins[0].value = 0  
-#   pfd.output_pins[1].value = 0
+#    pfd.output_pins[0].value = 0  
+#    pfd.output_pins[1].value = 0
 
 # examples
 #output

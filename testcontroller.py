@@ -85,7 +85,7 @@ while True:
         # energize pump relay 
         pump_relay_state = 1
     # else if wika input is 0
-    if over_p_wika == 0 and over_p_auto_sw_state != 0:
+    elif over_p_wika == 0 and over_p_auto_sw_state != 0:
         # de-energize pump relay 
         pump_relay_state = 0
 

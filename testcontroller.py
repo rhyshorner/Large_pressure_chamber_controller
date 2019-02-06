@@ -89,8 +89,8 @@ while True:
         elif over_p_wika == 0:
             # de-energize pump relay 
             pump_relay_state = 0
-    elif over_p_auto_sw_state == 0 & over_p_man_sw_state != 1:
-        pump_relay_state = 0
+#    elif over_p_auto_sw_state == 0 & over_p_man_sw_state != 1:
+#        pump_relay_state = 0
 
     if over_p_man_sw == 1 and over_p_man_sw_debounce == 0:
         #turn auto switch off

@@ -26,7 +26,7 @@ while True:
         pump_relay_debounce = 1
 
     pfd.output_pins[0].value = pump_relay_state
-    print("pump relay switch is: " + str(pump_relay_pushbutton) + " pump relay variable is: " + str(pump_relay_state))
+    print("pump switch: " + str(pump_relay_pushbutton) + " pump var: " + str(pump_relay_state) + " pump debounce: " + str(pump_relay_debounce))
 
 #    relief_relay = pfd.input_pins[1].value
 #    pfd.output_pins[1].value = relief_relay

@@ -27,8 +27,6 @@ while True:
     relief_relay = pfd.input_pins[1].value
     pfd.output_pins[1].value = relief_relay
     print("relief relay is: " + str(pfd.input_pins[1].value))
-
-    sleep(0.25)
 #except:
 #   pfd.output_pins[0].value = 0  
 #   pfd.output_pins[1].value = 0

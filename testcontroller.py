@@ -24,7 +24,7 @@ while True:
 # check current states and toggle accordingly
     if pump_relay_pushbutton == 1:
         if pump_relay_debounce == 1:
-            pump_relay_state ^= pump_relay_state
+            pump_relay_state ^= 1
             print(str(pump_relay_state))
             pump_relay_debounce = 0
     elif pump_relay_pushbutton == 0:

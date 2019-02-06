@@ -106,10 +106,10 @@ while True:
             # energize pump relay 
             pump_relay_state = 1
         # else if wika input is 0
-        else over_p_wika == 0:
+        else:
             # de-energize pump relay 
             pump_relay_state = 0
-    else
+    else:
         pump_relay_state = 0
     
 

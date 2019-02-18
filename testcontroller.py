@@ -71,6 +71,7 @@ while True:
 
 # ------------------------------------------------------------------------
 # OVER PRESSURE AND PUMP
+
     if over_p_auto_sw == 1 and over_p_auto_sw_debounce == 0:
         #turn manual switch off, interlock
         over_p_man_sw_state = 0
@@ -215,3 +216,51 @@ while True:
 # switchvariable = pfd.input_pins[1].value
 
 
+
+
+
+
+
+
+# time.time() method------------------------------------
+debouncestarttimerflag = 0
+
+    if over_p_auto_sw == 1 and over_p_auto_sw_debounce == 0:
+        if debouncestarttimerflag == 0:
+            debouncestarttimer = time.time()
+            debouncestarttimerflag = 1
+        if (debouncestarttimer - time.time()) >= 1:
+            #turn manual switch off, interlock
+            over_p_man_sw_state = 0
+            #toggle auto switch, either on or off
+            over_p_auto_sw_state ^= 1
+            #flag debounce variable
+            over_p_auto_sw_debounce = 1
+            #reset debounce timer flag
+            debouncestarttimerflag = 0
+    #elif button release
+    elif over_p_auto_sw == 0:
+        #de-flag debounce variable
+        over_p_auto_sw_debounce = 0
+        #reset debounce timer flag
+        debouncestarttimerflag = 0
+    
+    if over_p_man_sw == 1 and over_p_man_sw_debounce == 0:
+        if debouncestarttimerflag == 0:
+            debouncestarttimer = time.time()
+            debouncestarttimerflag = 1
+        if (debouncestarttimer - time.time()) >= 1:
+            #turn auto switch off, interlock
+            over_p_auto_sw_state = 0
+            #toggle manual switch, either on or off
+            over_p_man_sw_state ^= 1
+            #flag debounce variable
+            over_p_man_sw_debounce = 1
+            #reset debounce timer flag
+            debouncestarttimerflag = 0
+    #elif button release
+    elif over_p_man_sw == 0:
+        #de-flag debounce variable
+        over_p_man_sw_debounce = 0
+        #reset debounce timer flag
+        debouncestarttimerflag = 0

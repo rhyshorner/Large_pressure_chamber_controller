@@ -77,42 +77,44 @@ while True:
 # OVER PRESSURE AND PUMP
 
 
-    if over_p_auto_sw == 1 and over_p_auto_sw_toggle == 0:
+    if over_p_auto_sw == 1 and over_p_auto_sw_toggle == 0 and debounce_over_p_auto_flag == 0:
         if debounce_over_p_auto_flag == 0:
+            debounce_over_p_auto_flag = 1
+            debounce_over_p_auto_starttimer = time.time()
             #turn manual switch off, interlock
             over_p_man_sw_state = 0
             #toggle auto switch, either on or off
             over_p_auto_sw_state ^= 1
-            #flag debounce variable
+            #flag toggle variable
             over_p_auto_sw_toggle = 1
-            debounce_over_p_auto_starttimer = time.time()
-            debounce_over_p_auto_flag = 1
+            
         if (time.time() - debounce_over_p_auto_starttimer) >= 5:
             #reset debounce timer flag
             debounce_over_p_auto_flag = 0
     #elif bu_over_p_auto_tton release
     elif over_p_auto_sw == 0:
-        #de-flag debounce variable
+        #de-flag toggle variable
         over_p_auto_sw_toggle = 0
         #reset debounce timer flag
         debounce_over_p_auto_flag = 0
     
-    if over_p_man_sw == 1 and over_p_man_sw_toggle == 0:
+    if over_p_man_sw == 1 and over_p_man_sw_toggle == 0 and debounce_over_p_man_flag == 0:
         if debounce_over_p_man_flag == 0:
+            debounce_over_p_man_flag = 1
+            debounce_over_p_man_starttimer = time.time()
             #turn auto switch off, interlock
             over_p_auto_sw_state = 0
             #toggle manual switch, either on or off
             over_p_man_sw_state ^= 1
-            #flag debounce variable
+            #flag toggle variable
             over_p_man_sw_toggle = 1
-            debounce_over_p_man_starttimer = time.time()
-            debounce_over_p_man_flag = 1
+            
         if (time.time() - debounce_over_p_man_starttimer) >= 5:
             #reset debounce timer flag
             debounce_over_p_man_flag = 0
     #elif bu_over_p_auto_tton release
     elif over_p_man_sw == 0:
-        #de-flag debounce variable
+        #de-flag toggle variable
         over_p_man_sw_toggle = 0
         #reset debounce timer flag
         debounce_over_p_man_flag = 0

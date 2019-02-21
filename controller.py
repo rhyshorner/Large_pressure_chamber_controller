@@ -81,13 +81,14 @@ while True:
         if debounce_over_p_auto_flag == 0:
             debounce_over_p_auto_flag = 1
             debounce_over_p_auto_starttimer = time.time()
+
             #turn manual switch off, interlock
             over_p_man_sw_state = 0
             #toggle auto switch, either on or off
             over_p_auto_sw_state ^= 1
             #flag toggle variable
             over_p_auto_sw_toggle = 1
-            
+            print("the debounce_over_p_auto_starttimer time is: " + debounce_over_p_auto_starttimer)
         if (time.time() - debounce_over_p_auto_starttimer) >= 5:
             #reset debounce timer flag
             debounce_over_p_auto_flag = 0

@@ -46,6 +46,9 @@ pump_relay_state = 0
 relief_relay_state = 0
 
 debounce_over_p_auto_flag = 0
+debounce_over_p_man_flag = 0
+debounce_under_p_auto_flag = 0
+debounce_under_p_man_flag = 0
 #--------_over_p_auto_------------------------------------------------------
 #try:
 while True:
@@ -84,7 +87,7 @@ while True:
             over_p_auto_sw_toggle = 1
             debounce_over_p_auto_starttimer = time.time()
             debounce_over_p_auto_flag = 1
-        if (time.time() - debounce_over_p_auto_starttimer) >= 1:
+        if (time.time() - debounce_over_p_auto_starttimer) >= 5:
             #reset debounce timer flag
             debounce_over_p_auto_flag = 0
     #elif bu_over_p_auto_tton release
@@ -103,16 +106,16 @@ while True:
             #flag debounce variable
             over_p_man_sw_toggle = 1
             debounce_over_p_man_starttimer = time.time()
-            debounce_over_p_auto_flag = 1
-        if (time.time_over_p_auto_() - debouncestarttimer) >= 1:
+            debounce_over_p_man_flag = 1
+        if (time.time() - debounce_over_p_man_starttimer) >= 5:
             #reset debounce timer flag
-            debounce_over_p_auto_flag = 0
+            debounce_over_p_man_flag = 0
     #elif bu_over_p_auto_tton release
     elif over_p_man_sw == 0:
         #de-flag debounce variable
         over_p_man_sw_toggle = 0
         #reset debounce timer flag
-        debounce_over_p_au_over_p_auto_to_flag = 0
+        debounce_over_p_man_flag = 0
 
 # pump 
  #   if over_p_man_sw_state == 1:

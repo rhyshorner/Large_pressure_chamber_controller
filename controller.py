@@ -75,8 +75,8 @@ while True:
 
 # ------------------------------------------------------------------------
 # OVER PRESSURE AND PUMP
-    debounce_over_p_auto_starttimerr = time.time()
-    thecurrenttimer = time.time() - debounce_over_p_auto_starttimerr
+    debounce_over_p_auto_starttimerr = round(time.time(), 1)
+    thecurrenttimer = round(time.time() - debounce_over_p_auto_starttimerr, 1)
     print("current time: " + str(thecurrenttimer))
     if over_p_auto_sw == 1 and over_p_auto_sw_toggle == 0 and debounce_over_p_auto_flag == 0:
         if debounce_over_p_auto_flag == 0:

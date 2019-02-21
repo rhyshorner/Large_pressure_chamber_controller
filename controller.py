@@ -49,6 +49,8 @@ debounce_over_p_auto_flag = 0
 debounce_over_p_man_flag = 0
 debounce_under_p_auto_flag = 0
 debounce_under_p_man_flag = 0
+
+debounce_over_p_auto_starttimer = 0
 #--------_over_p_auto_------------------------------------------------------
 #try:
 while True:

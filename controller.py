@@ -88,7 +88,7 @@ while True:
             over_p_auto_sw_toggle = 1
             print("the debounce_over_p_auto_starttimer time is: " + str(debounce_over_p_auto_starttimer))
         #elif bu_over_p_auto_tton release
-        elif over_p_auto_sw == 0:
+        elif over_p_auto_sw == 0 and over_p_auto_sw_toggle == 1:
             debounce_over_p_auto_flag = 1
             debounce_over_p_auto_starttimer = time.time()
 

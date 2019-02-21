@@ -75,8 +75,8 @@ while True:
 
 # ------------------------------------------------------------------------
 # OVER PRESSURE AND PUMP
-    if over_p_auto_sw == 1 and over_p_auto_sw_toggle == 0 and debounce_over_p_auto_flag == 0:
-        if debounce_over_p_auto_flag == 0:
+    if debounce_over_p_auto_flag == 0:
+        if over_p_auto_sw == 1 and over_p_auto_sw_toggle == 0:
             debounce_over_p_auto_flag = 1
             debounce_over_p_auto_starttimer = time.time()
 
@@ -87,14 +87,18 @@ while True:
             #flag toggle variable
             over_p_auto_sw_toggle = 1
             print("the debounce_over_p_auto_starttimer time is: " + str(debounce_over_p_auto_starttimer))
-        if (time.time() - debounce_over_p_auto_starttimer) >= 5:
-            print("inside time calculatuion if statament")
+        #elif bu_over_p_auto_tton release
+        elif over_p_auto_sw == 0:
+            debounce_over_p_auto_flag = 1
+            debounce_over_p_auto_starttimer = time.time()
+
+            #de-flag toggle variable
+            over_p_auto_sw_toggle = 0
             #reset debounce timer flag
-            debounce_over_p_auto_flag = 0
-    #elif bu_over_p_auto_tton release
-    elif over_p_auto_sw == 0:
-        #de-flag toggle variable
-        over_p_auto_sw_toggle = 0
+            #debounce_over_p_auto_flag = 0
+    
+    if (time.time() - debounce_over_p_auto_starttimer) >= 5:
+        print("inside time calculatuion if statament")
         #reset debounce timer flag
         debounce_over_p_auto_flag = 0
     

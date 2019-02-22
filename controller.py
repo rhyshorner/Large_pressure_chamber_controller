@@ -101,11 +101,11 @@ while True:
             #reset debounce timer flag
             #debounce_over_p_auto_flag = 0
     
-    if (time.time() - debounce_over_p_auto_starttimer) >= 2:
+    if (time.time() - debounce_over_p_auto_starttimer) >= 0.2:
         #reset debounce timer flag
         debounce_over_p_auto_flag = 0
     
-#---------------------------------------------------------------
+#--------------
     if debounce_over_p_man_flag == 0:
         if over_p_man_sw == 1 and over_p_man_sw_toggle == 0:
             debounce_over_p_man_flag = 1
@@ -127,69 +127,62 @@ while True:
             #reset debounce timer flag
             #debounce_over_p_man_flag = 0
             
-    if (time.time() - debounce_over_p_man_starttimer) >= 2:
+    if (time.time() - debounce_over_p_man_starttimer) >= 0.2:
         #reset debounce timer flag
         debounce_over_p_man_flag = 0
 
-#-------------------------------------------------------------
-
-# pump 
- #   if over_p_man_sw_state == 1:
- #       # energize pump relay 
- ##       pump_relay_state = 1
-  #  elif over_p_auto_sw_state == 1:
-  #      # if wika input is 1
-  #      if over_p_wika == 1:
-  #          # energize pump relay 
-  #          pump_relay_state = 1
-  #      # else if wika input is 0
-  #      else:
-  #          # de-energize pump relay 
-  #          pump_relay_state = 0
-  #  else:
-  #      pump_relay_state = 0
-
 #------------------------------------------------------------------------
 # UNDER PRESSURE AND RELIEF
-    if under_p_auto_sw_state == 1 and under_p_auto_sw_toggle == 0:
-        #turn manual switch off, interlock
-        under_p_man_sw_state = 0
-        #toggle auto switch, either on or off
-        under_p_auto_sw_state ^= 1
-        #flag debounce variable
-        under_p_auto_sw_toggle = 1
-    #elif button release
-    elif under_p_auto_sw == 0:
-        #de-flag debounce variable
-        under_p_auto_sw_toggle = 0
-    
-    if under_p_man_sw == 1 and under_p_man_sw_toggle == 0:
-        #turn auto switch off, interlock
-        under_p_auto_sw_state = 0
-        #toggle manual switch, either on or off
-        under_p_man_sw_state ^= 1
-        #flag debounce variable
-        under_p_man_sw_toggle = 1
-    #elif button release
-    elif under_p_man_sw == 0:
-        #de-flag debounce variable
-        under_p_man_sw_toggle = 0
+    if debounce_under_p_auto_flag == 0:
+        if under_p_auto_sw == 1 and under_p_auto_sw_toggle == 0:
+            debounce_under_p_auto_flag = 1
+            debounce_under_p_auto_starttimer = time.time()
 
-# relief 
-#    if under_p_man_sw_state == 1:
-#        # energize pump relay 
-#        relief_relay_state = 1
-#    elif under_p_auto_sw_state == 1:
-#        # if wika input is 1
-#        if under_p_wika == 1:
-#            # energize pump relay 
-#            relief_relay_state = 1
-#        # else if wika input is 0
-#        else:
-##            # de-energize pump relay 
- #           relief_relay_state = 0
- #   else:
- #       relief_relay_state = 0
+            #turn auto switch off, interlock
+            under_p_man_sw_state = 0
+            #toggle manual switch, either on or off
+            under_p_auto_sw_state ^= 1
+            #flag toggle variable
+            under_p_auto_sw_toggle = 1
+        #elif bu_over_p_auto_tton release
+        elif under_p_auto_sw == 0 and under_p_auto_sw_toggle == 1:
+            debounce_under_p_auto_flag = 1
+            debounce_under_p_auto_starttimer = time.time()
+
+            #de-flag toggle variable
+            under_p_auto_sw_toggle = 0
+            #reset debounce timer flag
+            #debounce_under_p_auto_flag = 0
+            
+    if (time.time() - debounce_under_p_man_starttimer) >= 0.2:
+        #reset debounce timer flag
+        debounce_under_p_man_flag = 0
+#-------------------
+
+    if debounce_under_p_man_flag == 0:
+        if under_p_man_sw == 1 and under_p_man_sw_toggle == 0:
+            debounce_under_p_man_flag = 1
+            debounce_under_p_man_starttimer = time.time()
+
+            #turn auto switch off, interlock
+            under_p_auto_sw_state = 0
+            #toggle manual switch, either on or off
+            under_p_man_sw_state ^= 1
+            #flag toggle variable
+            under_p_man_sw_toggle = 1
+        #elif bu_over_p_auto_tton release
+        elif under_p_man_sw == 0 and under_p_man_sw_toggle == 1:
+            debounce_under_p_man_flag = 1
+            debounce_under_p_man_starttimer = time.time()
+
+            #de-flag toggle variable
+            under_p_man_sw_toggle = 0
+            #reset debounce timer flag
+            #debounce_over_p_man_flag = 0
+            
+    if (time.time() - debounce_under_p_man_starttimer) >= 0.2:
+        #reset debounce timer flag
+        debounce_under_p_man_flag = 0
 
 # -----------------------------------------------------------------------------
 # FILL AND DRAIN

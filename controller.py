@@ -215,6 +215,7 @@ try:
         )
 except:
         print("a keyboard interuption has occured")
+        print("all outputs pins set to low")
 # apply script shutdown output values
         #pfd.output_pins[0].value = 0 #pump_relay_state
         #pfd.output_pins[1].value = 0 #relief_relay_state

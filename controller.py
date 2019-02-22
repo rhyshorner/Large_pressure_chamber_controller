@@ -63,14 +63,14 @@ debounce_drain_starttimer = 0
 while True:
     # noise filtering by adding in some counters
 # read value
-    over_p_auto_sw = pfd.input_pins[0].value
-    over_p_man_sw = pfd.input_pins[1].value
+    over_p_auto_sw = pfd.input_pins[6].value
+    over_p_man_sw = pfd.input_pins[7].value
     under_p_auto_sw = pfd.input_pins[2].value
     under_p_man_sw = pfd.input_pins[3].value
     #over_p_wika = pfd.input_pins[4].value
     #under_p_wika = pfd.input_pins[5].value
-    fill_sw = pfd.input_pins[6].value
-    drain_sw = pfd.input_pins[7].value
+    fill_sw = pfd.input_pins[0].value
+    drain_sw = pfd.input_pins[1].value
 
     #output 
     # pin0 = pump solenoid

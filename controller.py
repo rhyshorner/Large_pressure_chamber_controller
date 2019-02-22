@@ -51,6 +51,7 @@ debounce_under_p_auto_flag = 0
 debounce_under_p_man_flag = 0
 
 debounce_over_p_auto_starttimer = 0
+debounce_over_p_man_starttimer = 0
 #--------_over_p_auto_------------------------------------------------------
 #try:
 while True:
@@ -88,7 +89,6 @@ while True:
             over_p_auto_sw_state ^= 1
             #flag toggle variable
             over_p_auto_sw_toggle = 1
-            print("the debounce_over_p_auto_starttimer time is: " + str(debounce_over_p_auto_starttimer))
         #elif bu_over_p_auto_tton release
         elif over_p_auto_sw == 0 and over_p_auto_sw_toggle == 1:
             debounce_over_p_auto_flag = 1
@@ -99,31 +99,36 @@ while True:
             #reset debounce timer flag
             #debounce_over_p_auto_flag = 0
     
-    if (time.time() - debounce_over_p_auto_starttimer) >= 5:
-        print("inside time calculatuion if statament")
+    if (time.time() - debounce_over_p_auto_starttimer) >= 2:
         #reset debounce timer flag
         debounce_over_p_auto_flag = 0
     
-    if over_p_man_sw == 1 and over_p_man_sw_toggle == 0 and debounce_over_p_man_flag == 0:
-        if debounce_over_p_man_flag == 0:
+
+    if debounce_over_p_man_flag == 0:
+        if over_p_man_sw == 1 and over_p_man_sw_toggle == 0:
             debounce_over_p_man_flag = 1
             debounce_over_p_man_starttimer = time.time()
+
             #turn auto switch off, interlock
             over_p_auto_sw_state = 0
             #toggle manual switch, either on or off
             over_p_man_sw_state ^= 1
             #flag toggle variable
             over_p_man_sw_toggle = 1
-            
-        if (time.time() - debounce_over_p_man_starttimer) >= 5:
-            #reset debounce timer flag
-            debounce_over_p_man_flag = 0
-    #elif bu_over_p_auto_tton release
-    elif over_p_man_sw == 0:
-        #de-flag toggle variable
-        over_p_man_sw_toggle = 0
+                
+    if (time.time() - debounce_over_p_man_starttimer) >= 2:
         #reset debounce timer flag
         debounce_over_p_man_flag = 0
+
+        #elif bu_over_p_auto_tton release
+        elif over_p_man_sw == 0 and over_p_man_sw_toggle == 1:
+            debounce_over_p_man_flag = 1
+            debounce_over_p_man_starttimer = time.time()
+
+            #de-flag toggle variable
+            over_p_man_sw_toggle = 0
+            #reset debounce timer flag
+            #debounce_over_p_man_flag = 0
 
 # pump 
  #   if over_p_man_sw_state == 1:

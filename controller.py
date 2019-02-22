@@ -218,9 +218,9 @@ except:
 # apply script shutdown output values
         #pfd.output_pins[0].value = 0 #pump_relay_state
         #pfd.output_pins[1].value = 0 #relief_relay_state
-        pfd.output_pins[2].value =  1 #over_p_auto_sw_state
+        pfd.output_pins[2].value =  0 #over_p_auto_sw_state
         pfd.output_pins[3].value =  0 #over_p_man_sw_state
-        pfd.output_pins[4].value =  1 #under_p_auto_sw_state
+        pfd.output_pins[4].value =  0 #under_p_auto_sw_state
         pfd.output_pins[5].value =  0 #under_p_man_sw_state
         pfd.output_pins[6].value =  0 #fill_state
         pfd.output_pins[7].value =  0 #drain_state

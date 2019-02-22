@@ -154,9 +154,9 @@ while True:
             #reset debounce timer flag
             #debounce_under_p_auto_flag = 0
             
-    if (time.time() - debounce_under_p_man_starttimer) >= 0.2:
+    if (time.time() - debounce_under_p_auto_starttimer) >= 0.2:
         #reset debounce timer flag
-        debounce_under_p_man_flag = 0
+        debounce_under_p_auto_flag = 0
 #-------------------
 
     if debounce_under_p_man_flag == 0:

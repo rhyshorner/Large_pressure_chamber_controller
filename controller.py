@@ -33,11 +33,11 @@ under_p_wika_debounce = 0
 
 # chamber fill pump 
 fill_state = 0
-fill_debounce = 0
+fill_toggle = 0
 
 # chamber drain pump
 drain_state = 0
-drain_debounce = 0
+drain_toggle = 0
 
 # pump relay output state
 pump_relay_state = 0
@@ -49,11 +49,15 @@ debounce_over_p_auto_flag = 0
 debounce_over_p_man_flag = 0
 debounce_under_p_auto_flag = 0
 debounce_under_p_man_flag = 0
+debounce_fill_flag = 0
+debounce_drain_flag = 0
 
 debounce_over_p_auto_starttimer = 0
 debounce_over_p_man_starttimer = 0
 debounce_under_p_auto_starttimer = 0
 debounce_under_p_man_starttimer = 0
+debounce_fill_starttimer = 0 
+debounce_drain_starttimer = 0
 #--------_over_p_auto_------------------------------------------------------
 #try:
 while True:
@@ -110,105 +114,83 @@ while True:
         if over_p_man_sw == 1 and over_p_man_sw_toggle == 0:
             debounce_over_p_man_flag = 1
             debounce_over_p_man_starttimer = time.time()
-
-            #turn auto switch off, interlock
             over_p_auto_sw_state = 0
-            #toggle manual switch, either on or off
             over_p_man_sw_state ^= 1
-            #flag toggle variable
             over_p_man_sw_toggle = 1
-        #elif bu_over_p_auto_tton release
+
         elif over_p_man_sw == 0 and over_p_man_sw_toggle == 1:
             debounce_over_p_man_flag = 1
             debounce_over_p_man_starttimer = time.time()
-
-            #de-flag toggle variable
             over_p_man_sw_toggle = 0
-            #reset debounce timer flag
-            #debounce_over_p_man_flag = 0
             
     if (time.time() - debounce_over_p_man_starttimer) >= 0.2:
-        #reset debounce timer flag
         debounce_over_p_man_flag = 0
 
 #------------------------------------------------------------------------
 # UNDER PRESSURE AND RELIEF
+#auto
     if debounce_under_p_auto_flag == 0:
         if under_p_auto_sw == 1 and under_p_auto_sw_toggle == 0:
             debounce_under_p_auto_flag = 1
             debounce_under_p_auto_starttimer = time.time()
-
-            #turn auto switch off, interlock
             under_p_man_sw_state = 0
-            #toggle manual switch, either on or off
             under_p_auto_sw_state ^= 1
-            #flag toggle variable
             under_p_auto_sw_toggle = 1
-        #elif bu_over_p_auto_tton release
+
         elif under_p_auto_sw == 0 and under_p_auto_sw_toggle == 1:
             debounce_under_p_auto_flag = 1
             debounce_under_p_auto_starttimer = time.time()
-
-            #de-flag toggle variable
             under_p_auto_sw_toggle = 0
-            #reset debounce timer flag
-            #debounce_under_p_auto_flag = 0
             
     if (time.time() - debounce_under_p_auto_starttimer) >= 0.2:
-        #reset debounce timer flag
         debounce_under_p_auto_flag = 0
-#-------------------
 
+#manual
     if debounce_under_p_man_flag == 0:
         if under_p_man_sw == 1 and under_p_man_sw_toggle == 0:
             debounce_under_p_man_flag = 1
             debounce_under_p_man_starttimer = time.time()
 
-            #turn auto switch off, interlock
             under_p_auto_sw_state = 0
-            #toggle manual switch, either on or off
             under_p_man_sw_state ^= 1
-            #flag toggle variable
             under_p_man_sw_toggle = 1
-        #elif bu_over_p_auto_tton release
         elif under_p_man_sw == 0 and under_p_man_sw_toggle == 1:
             debounce_under_p_man_flag = 1
             debounce_under_p_man_starttimer = time.time()
-
-            #de-flag toggle variable
             under_p_man_sw_toggle = 0
-            #reset debounce timer flag
-            #debounce_over_p_man_flag = 0
             
     if (time.time() - debounce_under_p_man_starttimer) >= 0.2:
-        #reset debounce timer flag
         debounce_under_p_man_flag = 0
 
 # -----------------------------------------------------------------------------
 # FILL AND DRAIN
-    if fill_sw == 1 and fill_debounce == 0:
-        #drain interlock??
-        #drain_state = 0
-        #toggle fill switch, either on or off
-        fill_state ^= 1
-        #flag debounce variable
-        fill_debounce = 1
-    #elif button release
-    elif fill_sw == 0:
-        #de-flag debounce variable
-        fill_debounce = 0
-    
-    if drain_sw == 1 and drain_debounce == 0:
-        #fill interlock??
-        #fill_state = 0
-        #toggle drain switch, either on or off
-        drain_state ^= 1
-        #flag debounce variable
-        drain_debounce = 1
-    #elif button release
-    elif drain_sw == 0:
-        #de-flag debounce variable
-        drain_debounce = 0
+    if debounce_fill_flag == 0:
+        if fill_sw == 1 and fill_toggle == 0:
+            debounce_fill_flag = 1
+            debounce_fill_starttimer = time.time()
+            fill_state ^= 1
+            fill_toggle = 1
+        elif fill_sw == 0 and fill_toggle == 1:
+            debounce_fill_flag = 1
+            debounce_fill_starttimer = time.time()
+            fill_toggle = 0
+
+    if (time.time() - debounce_fill_starttimer) >= 0.2:
+        debounce_fill_flag = 0
+
+    if debounce_drain_flag == 0:
+        if drain_sw == 1 and drain_toggle == 0:
+            debounce_drain_flag = 1
+            debounce_drain_starttimer = time.time()
+            drain_state ^= 1
+            drain_toggle = 1
+        elif drain_sw == 0 and drain_toggle == 1:
+            debounce_drain_flag = 1
+            debounce_drain_starttimer = time.time()
+            drain_toggle = 0
+
+    if (time.time() - debounce_drain_starttimer) >= 0.2:
+        debounce_drain_flag = 0
 
 #----------------------------------------------------------------------------------
 # apply states to outputs
@@ -231,26 +213,3 @@ while True:
     + " fill:" + str(fill_state) 
     + " drain:" + str(drain_state)
     )
-
-#    relief_relay = pfd.input_pins[1].value
-#    pfd.output_pins[1].value = relief_relay
-#    print("relief relay is: " + str(pfd.input_pins[1].value))
-#except:
-#    pfd.output_pins[0].value = 0  
-#    pfd.output_pins[1].value = 0
-
-# examples
-#output
- # pfd.output_pins[5].value = 1
-#input
-# switchvariable = pfd.input_pins[1].value
-
-
-
-
-
-
-
-
-# time.time() method------------------------------------
-

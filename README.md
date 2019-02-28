@@ -24,5 +24,31 @@ LIBRARIES NEED TO INSTALL;
                     speed_hz=ctypes.c_uint32(100000)
                 )
     
-    - 
+RPI BOOT SETTINGS REQUIRED TO CHANGE
+    -   sudo nano /etc/rc.local
+        -add "python3 /home/pi/chambercontroller/controller.py &"(line 50) just above "exit 0"(line 52)
+#--------------------------------------------------------------------
+#!/bin/sh -e
+#
+# rc.local
+#
+# This script is executed at the end of each multiuser runlevel.
+# Make sure that the script will "exit 0" on success or any other
+# value on error.
+#
+# In order to enable or disable this script just change the execution
+# bits.
+#
+# By default this script does nothing.
+
+# Print the IP address
+_IP=$(hostname -I) || true
+if [ "$_IP" ]; then
+  printf "My IP address is %s\n" "$_IP"
+fi
+
+python3 /home/pi/chambercontroller/controller.py &
+
+exit 0
+#--------------------------------------------------------------------
 

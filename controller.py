@@ -24,12 +24,12 @@ under_p_man_sw_state = 0
 under_p_man_sw_toggle = 0
 
 # Over pressure signal from Wika input, for relief valve
-over_p_wika_state = 0
-over_p_wika_debounce = 0
+unused_input4_state = 0
+unused_input4_toggle = 0
 
 # Over pressure signal from Wika input, for chamber pump
-under_p_wika_state = 0
-under_p_wika_debounce = 0
+unused_input5_state = 0
+unused_input5_toggle = 0
 
 # chamber fill pump 
 fill_state = 0
@@ -40,15 +40,17 @@ drain_state = 0
 drain_toggle = 0
 
 # pump relay output state
-pump_relay_state = 0
+unused_relay0_state = 0
 
 # relief relay output state
-relief_relay_state = 0
+unused_relay1_state = 0
 
 debounce_over_p_auto_flag = 0
 debounce_over_p_man_flag = 0
 debounce_under_p_auto_flag = 0
 debounce_under_p_man_flag = 0
+debounce_unused_input4_flag = 0
+debounce_unused_input5_flag = 0
 debounce_fill_flag = 0
 debounce_drain_flag = 0
 
@@ -56,6 +58,8 @@ debounce_over_p_auto_starttimer = 0
 debounce_over_p_man_starttimer = 0
 debounce_under_p_auto_starttimer = 0
 debounce_under_p_man_starttimer = 0
+debounce_unused_input4_starttimer = 0
+debounce_unused_input5_starttimer = 0
 debounce_fill_starttimer = 0 
 debounce_drain_starttimer = 0
 #--------_over_p_auto_------------------------------------------------------
@@ -67,14 +71,14 @@ try:
         over_p_man_sw = pfd.input_pins[1].value
         under_p_auto_sw = pfd.input_pins[2].value
         under_p_man_sw = pfd.input_pins[3].value
-        #over_p_wika = pfd.input_pins[4].value
-        #under_p_wika = pfd.input_pins[5].value
+        #unused_input4 = pfd.input_pins[4].value
+        #unused_input5 = pfd.input_pins[5].value
         fill_sw = pfd.input_pins[6].value
         drain_sw = pfd.input_pins[7].value
 
         #output 
-        # pin0 = pump solenoid
-        # pin1 = relief solenoid
+        # pin0 = unused relay0
+        # pin1 = unused relay1
         # pin2 = over_p_auto_indicator
         # pin3 = over_p_man_indicator
         # pin4 = under_p_auto_indicator
@@ -194,8 +198,8 @@ try:
 
     #----------------------------------------------------------------------------------
     # apply states to outputs
-        #pfd.output_pins[0].value = pump_relay_state
-        #pfd.output_pins[1].value = relief_relay_state
+        #pfd.output_pins[0].value = unused_relay0_state
+        #pfd.output_pins[1].value = unused_relay1_state
         pfd.output_pins[2].value = over_p_auto_sw_state
         pfd.output_pins[3].value = over_p_man_sw_state
         pfd.output_pins[4].value = under_p_auto_sw_state
@@ -204,9 +208,7 @@ try:
         pfd.output_pins[7].value = drain_state
 
     # debugging print
-        print("pump:" + str(pump_relay_state) 
-        + " relief:" + str(relief_relay_state) 
-        + " OP auto:" + str(over_p_auto_sw_state) 
+        print("OP auto:" + str(over_p_auto_sw_state) 
         + " OP man:" + str(over_p_man_sw_state) 
         + " UP auto:" + str(under_p_auto_sw_state) 
         + " UP man:" + str(under_p_man_sw_state) 
@@ -214,11 +216,11 @@ try:
         + " drain:" + str(drain_state)
         )
 except:
-        print("a keyboard interuption has occured")
+        print("a script interuption has occured")
         print("all outputs pins set to low")
 # apply script shutdown output values
-        #pfd.output_pins[0].value = 0 #pump_relay_state
-        #pfd.output_pins[1].value = 0 #relief_relay_state
+        #pfd.output_pins[0].value = 0 #on board relay
+        #pfd.output_pins[1].value = 0 #on board relay
         pfd.output_pins[2].value =  0 #over_p_auto_sw_state
         pfd.output_pins[3].value =  0 #over_p_man_sw_state
         pfd.output_pins[4].value =  0 #under_p_auto_sw_state

@@ -60,7 +60,9 @@ debounce_under_p_auto_starttimer = 0
 debounce_under_p_man_starttimer = 0
 debounce_unused_input4_starttimer = 0
 debounce_unused_input5_starttimer = 0
-debounce_fill_starttimer = 0 
+#debounce_fill_starttimer = 0 
+debounce_fill_risetimer = 0 
+debounce_fill_falltimer = 0 
 debounce_drain_starttimer = 0
 
 external_noise_filtering_starttimer = 0
@@ -198,19 +200,37 @@ try:
 ########################################################
 #prototype below
 #####################################################3
-        if fill_sw == 1:
-            debounce_fill_starttimer = time.time()
-        else:
-            debounce_fill_starttimer = 0
-
-        if (time.time() - debounce_fill_starttimer) >= 1 and fill_sw == 1:
-            fill_state ^= 1
+#        if fill_sw == 1:
+#            debounce_fill_starttimer = time.time()
+#        elif fill_sw == 0:
+#            debounce_fill_starttimer = 0
+#        fill_countdown = time.time() - debounce_fill_starttimer
+#        if fill_countdown >= 1 and fill_sw == 1:
+#            fill_state ^= 1
+#            fill_toggle = 1
+#            debounce_fill_starttimer = 0
+#        elif (time.time() - debounce_fill_starttimer) >= 1 and fill_sw == 0:
+#            debounce_fill_starttimer = 0
+#            fill_toggle = 0
+########################################################
+#prototype below MJ
+#####################################################3
+        if fill_sw_filt == 1:       #Debounce/Filter Falling Edge
+            if fill_sw ==1:
+                debounce_fill_falltimer = time.time()
+            if (time.time() - debounce_fill_falltimer) > 0.2:
+                fill_sw_filt = 0
+        if fill_sw_filt == 0:       #Debounce/Filter Rising Edge
+            if fill_sw ==0:
+                debounce_fill_risetimer = time.time()
+            if (time.time() - debounce_fill_risetimer) > 0.2:
+                fill_sw_filt = 1       
+        if fill_sw_filt == 1 and fill_toggle == 0:       #Toggle Output State
             fill_toggle = 1
-            debounce_fill_starttimer = 0
-        elif (time.time() - debounce_fill_starttimer) >= 1 and fill_sw == 0:
-            debounce_fill_starttimer = 0
+            fill_state ^= 1
+        elif fill_sw_filt == 0
             fill_toggle = 0
-
+            
 #############################################################
         if debounce_drain_flag == 0:
             if drain_sw == 1 and drain_toggle == 0:

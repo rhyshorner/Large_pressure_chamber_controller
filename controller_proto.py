@@ -228,7 +228,7 @@ try:
         if fill_sw_filt == 1 and fill_toggle == 0:       #Toggle Output State
             fill_toggle = 1
             fill_state ^= 1
-        elif fill_sw_filt == 0
+        elif fill_sw_filt == 0:
             fill_toggle = 0
             
 #############################################################

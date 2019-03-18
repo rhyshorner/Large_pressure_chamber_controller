@@ -60,9 +60,12 @@ debounce_under_p_auto_starttimer = 0
 debounce_under_p_man_starttimer = 0
 debounce_unused_input4_starttimer = 0
 debounce_unused_input5_starttimer = 0
-#debounce_fill_starttimer = 0 
+
+debounce_fill_starttimer = 0 
 debounce_fill_risetimer = 0 
 debounce_fill_falltimer = 0 
+fill_sw_filt = 0
+
 debounce_drain_starttimer = 0
 
 external_noise_filtering_starttimer = 0
@@ -216,12 +219,12 @@ try:
 #prototype below MJ
 #####################################################3
         if fill_sw_filt == 1:       #Debounce/Filter Falling Edge
-            if fill_sw ==1:
+            if fill_sw == 1:
                 debounce_fill_falltimer = time.time()
             if (time.time() - debounce_fill_falltimer) > 0.2:
                 fill_sw_filt = 0
         if fill_sw_filt == 0:       #Debounce/Filter Rising Edge
-            if fill_sw ==0:
+            if fill_sw == 0:
                 debounce_fill_risetimer = time.time()
             if (time.time() - debounce_fill_risetimer) > 0.2:
                 fill_sw_filt = 1       

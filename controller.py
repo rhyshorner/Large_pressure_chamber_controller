@@ -120,7 +120,7 @@ try:
             if (time.time() - debounce_over_p_auto_falltimer) > debounce_time_delay:
                 over_p_auto_sw_filt = 0
         if over_p_auto_sw_filt == 0:       #Debounce/Filter Rising Edge
-            if over_p_auto_sw == 0 and :
+            if over_p_auto_sw == 0:
                 debounce_over_p_auto_risetimer = time.time()
             if (time.time() - debounce_over_p_auto_risetimer) > debounce_time_delay:
                 over_p_auto_sw_filt = 1       

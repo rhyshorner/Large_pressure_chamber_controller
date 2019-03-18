@@ -51,8 +51,6 @@ debounce_under_p_auto_flag = 0
 debounce_under_p_man_flag = 0
 debounce_unused_input4_flag = 0
 debounce_unused_input5_flag = 0
-debounce_fill_flag = 0
-debounce_drain_flag = 0
 
 debounce_over_p_auto_starttimer = 0
 debounce_over_p_man_starttimer = 0
@@ -66,10 +64,10 @@ debounce_fill_risetimer = 0
 debounce_fill_falltimer = 0 
 fill_sw_filt = 0
 
-debounce_drain_starttimer = 0
-
-external_noise_filtering_starttimer = 0
-external_noise_filtering_flag = 0
+debounce_drain_starttimer = 0 
+debounce_drain_risetimer = 0 
+debounce_drain_falltimer = 0 
+drain_sw_filt = 0
 
 pifacedigitalio.init()
 pifacedigitalio.digital_write_pullup(0,1)
@@ -185,39 +183,7 @@ try:
             debounce_under_p_man_flag = 0
 
     # -----------------------------------------------------------------------------
-    # FILL AND DRAIN
-     #   if debounce_fill_flag == 0:
-     #       if fill_sw == 1 and fill_toggle == 0:
-     #           debounce_fill_flag = 1
-     #           debounce_fill_starttimer = time.time()
-     #           fill_toggle = 1
-     #       elif fill_sw == 0 and fill_toggle == 1:
-     #           debounce_fill_flag = 1
-     #           #debounce_fill_starttimer = 0
-     #           fill_toggle = 0
-     #   if (time.time() - debounce_fill_starttimer) >= 1:
-     #       if fill_sw == 1 and debounce_fill_flag == 1:
-     #           fill_state ^= 1
-     #           debounce_fill_flag = 0
-
-########################################################
-#prototype below
-#####################################################3
-#        if fill_sw == 1:
-#            debounce_fill_starttimer = time.time()
-#        elif fill_sw == 0:
-#            debounce_fill_starttimer = 0
-#        fill_countdown = time.time() - debounce_fill_starttimer
-#        if fill_countdown >= 1 and fill_sw == 1:
-#            fill_state ^= 1
-#            fill_toggle = 1
-#            debounce_fill_starttimer = 0
-#        elif (time.time() - debounce_fill_starttimer) >= 1 and fill_sw == 0:
-#            debounce_fill_starttimer = 0
-#            fill_toggle = 0
-########################################################
-#prototype below MJ
-#####################################################3
+    # FILL
         if fill_sw_filt == 1:       #Debounce/Filter Falling Edge
             if fill_sw == 1:
                 debounce_fill_falltimer = time.time()
@@ -234,19 +200,23 @@ try:
         elif fill_sw_filt == 0:
             fill_toggle = 0
             
-#############################################################
-        if debounce_drain_flag == 0:
-            if drain_sw == 1 and drain_toggle == 0:
-                debounce_drain_flag = 1
-                debounce_drain_starttimer = time.time()
-                drain_state ^= 1
-                drain_toggle = 1
-            elif drain_sw == 0 and drain_toggle == 1:
-                debounce_drain_flag = 1
-                debounce_drain_starttimer = time.time()
-                drain_toggle = 0
-        if (time.time() - debounce_drain_starttimer) >= 0.2:
-            debounce_drain_flag = 0
+    # -----------------------------------------------------------------------------
+    # DRAIN
+        if drain_sw_filt == 1:       #Debounce/Filter Falling Edge
+            if drain_sw == 1:
+                debounce_drain_falltimer = time.time()
+            if (time.time() - debounce_drain_falltimer) > 0.2:
+                drain_sw_filt = 0
+        if drain_sw_filt == 0:       #Debounce/Filter Rising Edge
+            if drain_sw == 0:
+                debounce_drain_risetimer = time.time()
+            if (time.time() - debounce_drain_risetimer) > 0.2:
+                drain_sw_filt = 1       
+        if drain_sw_filt == 1 and drain_toggle == 0:       #Toggle Output State
+            drain_toggle = 1
+            drain_state ^= 1
+        elif drain_sw_filt == 0:
+            drain_toggle = 0
 
     #----------------------------------------------------------------------------------
     # apply states to outputs

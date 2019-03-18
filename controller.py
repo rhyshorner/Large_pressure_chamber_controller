@@ -30,6 +30,7 @@ under_p_auto_sw_state = 0
 under_p_auto_sw_toggle = 0
 under_p_auto_sw_filt = 0
 under_p_auto_sw = 0
+under_p_auto_pumpfeedback_flag = 0
 debounce_under_p_auto_falltimer = 0
 debounce_under_p_auto_risetimer = 0
 
@@ -119,7 +120,7 @@ try:
             if (time.time() - debounce_over_p_auto_falltimer) > debounce_time_delay:
                 over_p_auto_sw_filt = 0
         if over_p_auto_sw_filt == 0:       #Debounce/Filter Rising Edge
-            if over_p_auto_sw == 0:
+            if over_p_auto_sw == 0 and :
                 debounce_over_p_auto_risetimer = time.time()
             if (time.time() - debounce_over_p_auto_risetimer) > debounce_time_delay:
                 over_p_auto_sw_filt = 1       
@@ -152,15 +153,19 @@ try:
     # UNDER PRESSURE AND RELIEF
     #Under pressure pump - Auto
         if under_p_auto_sw_filt == 1:       #Debounce/Filter Falling Edge
-            if under_p_auto_sw == 1:
+            if under_p_auto_sw == 1 and under_p_auto_pumpfeedback_flag = 0:
                 debounce_under_p_auto_falltimer = time.time()
+                under_p_auto_pumpfeedback_flag = 1
             if (time.time() - debounce_under_p_auto_falltimer) > debounce_time_delay:
                 under_p_auto_sw_filt = 0
+                under_p_auto_pumpfeedback_flag = 0
         if under_p_auto_sw_filt == 0:       #Debounce/Filter Rising Edge
-            if under_p_auto_sw == 0:
+            if under_p_auto_sw == 0 and under_p_auto_pumpfeedback_flag = 0:
                 debounce_under_p_auto_risetimer = time.time()
+                under_p_auto_pumpfeedback_flag = 1
             if (time.time() - debounce_under_p_auto_risetimer) > debounce_time_delay:
-                under_p_auto_sw_filt = 1       
+                under_p_auto_sw_filt = 1 
+                under_p_auto_pumpfeedback_flag = 0     
         if under_p_auto_sw_filt == 1 and over_p_auto_sw_toggle == 0:       #Toggle Output State
             under_p_auto_sw_toggle = 1
             under_p_man_sw_state = 0

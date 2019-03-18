@@ -152,15 +152,15 @@ try:
     #------------------------------------------------------------------------
     # UNDER PRESSURE AND RELIEF
     #Under pressure pump - Auto
-        if under_p_auto_sw_filt == 1:       #Debounce/Filter Falling Edge
-            if under_p_auto_sw == 1 and under_p_auto_pumpfeedback_flag == 0:
+        if under_p_auto_sw_filt == 1 and under_p_auto_pumpfeedback_flag == 0:  #Debounce/Filter Falling Edge
+            if under_p_auto_sw == 1:
                 debounce_under_p_auto_falltimer = time.time()
                 under_p_auto_pumpfeedback_flag = 1
             if (time.time() - debounce_under_p_auto_falltimer) > debounce_time_delay:
                 under_p_auto_sw_filt = 0
                 under_p_auto_pumpfeedback_flag = 0
         if under_p_auto_sw_filt == 0:       #Debounce/Filter Rising Edge
-            if under_p_auto_sw == 0 and under_p_auto_pumpfeedback_flag == 0:
+            if under_p_auto_sw == 0:
                 debounce_under_p_auto_risetimer = time.time()
                 under_p_auto_pumpfeedback_flag = 1
             if (time.time() - debounce_under_p_auto_risetimer) > debounce_time_delay:

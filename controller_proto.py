@@ -228,7 +228,6 @@ try:
         pfd.output_pins[5].value = under_p_man_sw_state
         pfd.output_pins[6].value = fill_state
         pfd.output_pins[7].value = drain_state
-        sleep(0.1)
 
     # debugging print
         print("OP auto:" + str(over_p_auto_sw_state) 

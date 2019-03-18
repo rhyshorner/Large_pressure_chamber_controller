@@ -201,7 +201,7 @@ try:
         if fill_sw == 1 and fill_toggle == 0:
             debounce_fill_starttimer = time.time()
             debounce_fill_flag == 1
-                fill_toggle = 1
+            fill_toggle = 1
         elif fill_sw == 0:
             debounce_fill_starttimer = 0
             debounce_fill_flag = 0

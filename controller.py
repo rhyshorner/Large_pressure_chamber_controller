@@ -7,7 +7,7 @@ import pifacedigitalio
 
 pfd = pifacedigitalio.PiFaceDigital() # creates a PiFace Digtal object
 
-debounce_time_delay = 0.2
+debounce_time_delay = 0.1
 
 # Over pressure auto switch, for relief valve
 over_p_auto_sw_state = 0

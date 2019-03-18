@@ -200,6 +200,9 @@ try:
 #####################################################3
         if fill_sw == 1:
             debounce_fill_starttimer = time.time()
+            pfd.output_pins[0].value = 1
+            sleep(0.1)
+            pfd.output_pins[0].value = 0
         elif fill_sw == 0:
             debounce_fill_starttimer = 0
         if (time.time() - debounce_fill_starttimer) >= 1 and fill_toggle == 0:
@@ -249,7 +252,7 @@ except:
         print("a script interuption has occured")
         print("all outputs pins set to low")
 # apply script shutdown output values
-        #pfd.output_pins[0].value = 0 #on board relay
+        pfd.output_pins[0].value = 0 #test click
         #pfd.output_pins[1].value = 0 #on board relay
         pfd.output_pins[2].value =  0 #over_p_auto_sw_state
         pfd.output_pins[3].value =  0 #over_p_man_sw_state

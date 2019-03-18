@@ -198,21 +198,17 @@ try:
 ########################################################
 #prototype below
 #####################################################3
-        if fill_sw == 1 and fill_toggle == 0:
+        if fill_sw == 1:
             debounce_fill_starttimer = time.time()
-            debounce_fill_flag == 1
-            fill_toggle = 1
         elif fill_sw == 0:
             debounce_fill_starttimer = 0
-            debounce_fill_flag = 0
-            fill_toggle = 0
-        if (time.time() - debounce_fill_starttimer) >= 1:
-            if fill_sw == 1 and debounce_fill_flag == 1:
+        if (time.time() - debounce_fill_starttimer) >= 1 and fill_toggle = 0:
+            if fill_sw == 1:
                 fill_state ^= 1
-                debounce_fill_flag = 0
+                fill_toggle = 1
+                debounce_fill_starttimer = 0
             elif fill_sw == 0:
                 debounce_fill_starttimer = 0
-                debounce_fill_flag = 0
                 fill_toggle = 0
 
 #############################################################

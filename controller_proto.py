@@ -200,12 +200,12 @@ try:
 #####################################################3
         if fill_sw == 1:
             debounce_fill_starttimer = time.time()
+        elif fill_sw == 0:
+            debounce_fill_starttimer = 0
+        if (time.time() - debounce_fill_starttimer) >= 1:
             pfd.output_pins[0].value = 1
             sleep(0.1)
             pfd.output_pins[0].value = 0
-        elif fill_sw == 0:
-            debounce_fill_starttimer = 0
-        if (time.time() - debounce_fill_starttimer) >= 1 and fill_toggle == 0:
             if fill_sw == 1:
                 fill_state ^= 1
                 fill_toggle = 1

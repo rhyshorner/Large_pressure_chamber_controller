@@ -10,65 +10,71 @@ pfd = pifacedigitalio.PiFaceDigital() # creates a PiFace Digtal object
 # Over pressure auto switch, for relief valve
 over_p_auto_sw_state = 0
 over_p_auto_sw_toggle = 0
+over_p_auto_sw_filt = 0
+over_p_auto_sw = 0
+debounce_over_p_auto_falltimer = 0
+debounce_over_p_auto_risetimer = 0
 
 # Over pressure manual switch, for relief valve override
 over_p_man_sw_state = 0
 over_p_man_sw_toggle = 0
+over_p_man_sw_filt = 0
+over_p_man_sw = 0
+debounce_over_p_man_falltimer = 0
+debounce_over_p_man_risetimer = 0
 
 # Under pressure auto switch, for relief valve
 under_p_auto_sw_state = 0
 under_p_auto_sw_toggle = 0
+under_p_auto_sw_filt = 0
+under_p_auto_sw = 0
+debounce_under_p_auto_falltimer = 0
+debounce_under_p_auto_risetimer = 0
 
 # Under pressure manual switch, for chamber pump override
 under_p_man_sw_state = 0
 under_p_man_sw_toggle = 0
+under_p_man_sw_filt = 0
+under_p_man_sw = 0
+debounce_under_p_man_falltimer = 0
+debounce_under_p_man_risetimer = 0
 
 # Over pressure signal from Wika input, for relief valve
 unused_input4_state = 0
 unused_input4_toggle = 0
+input4_sw_filt = 0
+input4_sw = 0
+debounce_input4_man_falltimer = 0
+debounce_input4_man_risetimer = 0
 
 # Over pressure signal from Wika input, for chamber pump
 unused_input5_state = 0
 unused_input5_toggle = 0
+input5_sw_filt = 0
+input5_sw = 0
+debounce_input5_man_falltimer = 0
+debounce_input5_man_risetimer = 0
 
 # chamber fill pump 
 fill_state = 0
 fill_toggle = 0
-
-# chamber drain pump
-drain_state = 0
-drain_toggle = 0
-
-# pump relay output state
-unused_relay0_state = 0
-
-# relief relay output state
-unused_relay1_state = 0
-
-debounce_over_p_auto_flag = 0
-debounce_over_p_man_flag = 0
-debounce_under_p_auto_flag = 0
-debounce_under_p_man_flag = 0
-debounce_unused_input4_flag = 0
-debounce_unused_input5_flag = 0
-
-debounce_over_p_auto_starttimer = 0
-debounce_over_p_man_starttimer = 0
-debounce_under_p_auto_starttimer = 0
-debounce_under_p_man_starttimer = 0
-debounce_unused_input4_starttimer = 0
-debounce_unused_input5_starttimer = 0
-
-debounce_fill_starttimer = 0 
 debounce_fill_risetimer = 0 
 debounce_fill_falltimer = 0 
 fill_sw_filt = 0
 
-debounce_drain_starttimer = 0 
+# chamber drain pump
+drain_state = 0
+drain_toggle = 0
 debounce_drain_risetimer = 0 
 debounce_drain_falltimer = 0 
 drain_sw_filt = 0
 
+# pump relay output state
+unused_relay0_state = 0
+# relief relay output state
+unused_relay1_state = 0
+
+#-------setting pullup resistors------------------------------------------
 pifacedigitalio.init()
 pifacedigitalio.digital_write_pullup(0,1)
 pifacedigitalio.digital_write_pullup(1,1)
@@ -104,84 +110,79 @@ try:
 
     # ------------------------------------------------------------------------
     # OVER PRESSURE AND PUMP
-        if debounce_over_p_auto_flag == 0:
-            if over_p_auto_sw == 1 and over_p_auto_sw_toggle == 0:
-                debounce_over_p_auto_flag = 1
-                debounce_over_p_auto_starttimer = time.time()
-
-                #turn manual switch off, interlock
-                over_p_man_sw_state = 0
-                #toggle auto switch, either on or off
-                over_p_auto_sw_state ^= 1
-                #flag toggle variable
-                over_p_auto_sw_toggle = 1
-            #elif bu_over_p_auto_tton release
-            elif over_p_auto_sw == 0 and over_p_auto_sw_toggle == 1:
-                debounce_over_p_auto_flag = 1
-                debounce_over_p_auto_starttimer = time.time()
-
-                #de-flag toggle variable
-                over_p_auto_sw_toggle = 0
-                #reset debounce timer flag
-                #debounce_over_p_auto_flag = 0
+    # Over pressure pump - Auto
+        if over_p_auto_sw_filt == 1:       #Debounce/Filter Falling Edge
+            if over_p_auto_sw == 1:
+                debounce_over_p_auto_falltimer = time.time()
+            if (time.time() - debounce_over_p_auto_falltimer) > 0.2:
+                over_p_auto_sw_filt = 0
+        if over_p_auto_sw_filt == 0:       #Debounce/Filter Rising Edge
+            if over_p_auto_sw == 0:
+                debounce_over_p_auto_risetimer = time.time()
+            if (time.time() - debounce_over_p_auto_risetimer) > 0.2:
+                over_p_auto_sw_filt = 1       
+        if over_p_auto_sw_filt == 1 and over_p_auto_sw_toggle == 0:       #Toggle Output State
+            over_p_auto_sw_toggle = 1
+            over_p_man_sw_state = 0
+            over_p_auto_sw_state ^= 1
+        elif over_p_auto_sw_filt == 0:
+            over_p_auto_sw_toggle = 0
         
-        if (time.time() - debounce_over_p_auto_starttimer) >= 0.2:
-            #reset debounce timer flag
-            debounce_over_p_auto_flag = 0
-        
-    #--------------
-        if debounce_over_p_man_flag == 0:
-            if over_p_man_sw == 1 and over_p_man_sw_toggle == 0:
-                debounce_over_p_man_flag = 1
-                debounce_over_p_man_starttimer = time.time()
-                over_p_auto_sw_state = 0
-                over_p_man_sw_state ^= 1
-                over_p_man_sw_toggle = 1
-
-            elif over_p_man_sw == 0 and over_p_man_sw_toggle == 1:
-                debounce_over_p_man_flag = 1
-                debounce_over_p_man_starttimer = time.time()
-                over_p_man_sw_toggle = 0
-                
-        if (time.time() - debounce_over_p_man_starttimer) >= 0.2:
-            debounce_over_p_man_flag = 0
+    # Over pressure pump - Manual
+        if over_p_man_sw_filt == 1:       #Debounce/Filter Falling Edge
+            if over_p_man_sw == 1:
+                debounce_over_p_man_falltimer = time.time()
+            if (time.time() - debounce_over_p_man_falltimer) > 0.2:
+                over_p_man_sw_filt = 0
+        if over_p_man_sw_filt == 0:       #Debounce/Filter Rising Edge
+            if over_p_man_sw == 0:
+                debounce_over_p_man_risetimer = time.time()
+            if (time.time() - debounce_over_p_man_risetimer) > 0.2:
+                over_p_man_sw_filt = 1       
+        if over_p_man_sw_filt == 1 and over_p_man_sw_toggle == 0:       #Toggle Output State
+            over_p_man_sw_toggle = 1
+            over_p_auto_sw_state = 0
+            over_p_man_sw_state ^= 1
+        elif over_p_man_sw_filt == 0:
+            over_p_man_sw_toggle = 0
 
     #------------------------------------------------------------------------
     # UNDER PRESSURE AND RELIEF
-    #auto
-        if debounce_under_p_auto_flag == 0:
-            if under_p_auto_sw == 1 and under_p_auto_sw_toggle == 0:
-                debounce_under_p_auto_flag = 1
-                debounce_under_p_auto_starttimer = time.time()
-                under_p_man_sw_state = 0
-                under_p_auto_sw_state ^= 1
-                under_p_auto_sw_toggle = 1
+    #Under pressure pump - Auto
+        if under_p_auto_sw_filt == 1:       #Debounce/Filter Falling Edge
+            if under_p_auto_sw == 1:
+                debounce_under_p_auto_falltimer = time.time()
+            if (time.time() - debounce_under_p_auto_falltimer) > 0.2:
+                under_p_auto_sw_filt = 0
+        if under_p_auto_sw_filt == 0:       #Debounce/Filter Rising Edge
+            if under_p_auto_sw == 0:
+                debounce_under_p_auto_risetimer = time.time()
+            if (time.time() - debounce_under_p_auto_risetimer) > 0.2:
+                under_p_auto_sw_filt = 1       
+        if under_p_auto_sw_filt == 1 and over_p_auto_sw_toggle == 0:       #Toggle Output State
+            under_p_auto_sw_toggle = 1
+            under_p_man_sw_state = 0
+            under_p_auto_sw_state ^= 1
+        elif under_p_auto_sw_filt == 0:
+            under_p_auto_sw_toggle = 0
 
-            elif under_p_auto_sw == 0 and under_p_auto_sw_toggle == 1:
-                debounce_under_p_auto_flag = 1
-                debounce_under_p_auto_starttimer = time.time()
-                under_p_auto_sw_toggle = 0
-                
-        if (time.time() - debounce_under_p_auto_starttimer) >= 0.2:
-            debounce_under_p_auto_flag = 0
-
-    #manual
-        if debounce_under_p_man_flag == 0:
-            if under_p_man_sw == 1 and under_p_man_sw_toggle == 0:
-                debounce_under_p_man_flag = 1
-                debounce_under_p_man_starttimer = time.time()
-
-                under_p_auto_sw_state = 0
-                under_p_man_sw_state ^= 1
-                under_p_man_sw_toggle = 1
-            elif under_p_man_sw == 0 and under_p_man_sw_toggle == 1:
-                debounce_under_p_man_flag = 1
-                debounce_under_p_man_starttimer = time.time()
-                under_p_man_sw_toggle = 0
-                
-        if (time.time() - debounce_under_p_man_starttimer) >= 0.2:
-            debounce_under_p_man_flag = 0
-
+    # Under pressure pump - Manual
+        if under_p_man_sw_filt == 1:       #Debounce/Filter Falling Edge
+            if under_p_man_sw == 1:
+                debounce_under_p_man_falltimer = time.time()
+            if (time.time() - debounce_under_p_man_falltimer) > 0.2:
+                under_p_man_sw_filt = 0
+        if under_p_man_sw_filt == 0:       #Debounce/Filter Rising Edge
+            if under_p_man_sw == 0:
+                debounce_under_p_man_risetimer = time.time()
+            if (time.time() - debounce_under_p_man_risetimer) > 0.2:
+                under_p_man_sw_filt = 1       
+        if under_p_man_sw_filt == 1 and under_p_man_sw_toggle == 0:       #Toggle Output State
+            under_p_man_sw_toggle = 1
+            under_p_auto_sw_state = 0
+            under_p_man_sw_state ^= 1
+        elif under_p_man_sw_filt == 0:
+            under_p_man_sw_toggle = 0
     # -----------------------------------------------------------------------------
     # FILL
         if fill_sw_filt == 1:       #Debounce/Filter Falling Edge
@@ -199,7 +200,6 @@ try:
             fill_state ^= 1
         elif fill_sw_filt == 0:
             fill_toggle = 0
-            
     # -----------------------------------------------------------------------------
     # DRAIN
         if drain_sw_filt == 1:       #Debounce/Filter Falling Edge
@@ -220,8 +220,8 @@ try:
 
     #----------------------------------------------------------------------------------
     # apply states to outputs
-        #pfd.output_pins[0].value = unused_relay0_state
-        #pfd.output_pins[1].value = unused_relay1_state
+        pfd.output_pins[0].value = unused_relay0_state
+        pfd.output_pins[1].value = unused_relay1_state
         pfd.output_pins[2].value = over_p_auto_sw_state
         pfd.output_pins[3].value = over_p_man_sw_state
         pfd.output_pins[4].value = under_p_auto_sw_state
@@ -241,8 +241,8 @@ except:
         print("a script interuption has occured")
         print("all outputs pins set to low")
 # apply script shutdown output values
-        pfd.output_pins[0].value = 0 #test click
-        #pfd.output_pins[1].value = 0 #on board relay
+        pfd.output_pins[0].value = 0 #on board relay
+        pfd.output_pins[1].value = 0 #on board relay
         pfd.output_pins[2].value =  0 #over_p_auto_sw_state
         pfd.output_pins[3].value =  0 #over_p_man_sw_state
         pfd.output_pins[4].value =  0 #under_p_auto_sw_state

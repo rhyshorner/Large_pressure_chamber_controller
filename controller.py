@@ -66,14 +66,14 @@ debounce_drain_starttimer = 0
 external_noise_filtering_starttimer = 0
 external_noise_filtering_flag = 0
 
-pfd.digital_write_pullup(0,1)
-pfd.digital_write_pullup(1,1)
-pfd.digital_write_pullup(2,1)
-pfd.digital_write_pullup(3,1)
-pfd.digital_write_pullup(4,1)
-pfd.digital_write_pullup(5,1)
-pfd.digital_write_pullup(6,1)
-pfd.digital_write_pullup(7,1)
+pifacedigitalio.digital_write_pullup(input_pins[0],1)
+pifacedigitalio.digital_write_pullup(1,1)
+pifacedigitalio.digital_write_pullup(2,1)
+pifacedigitalio.digital_write_pullup(3,1)
+pifacedigitalio.digital_write_pullup(4,1)
+pifacedigitalio.digital_write_pullup(5,1)
+pifacedigitalio.digital_write_pullup(6,1)
+pifacedigitalio.digital_write_pullup(7,1)
 #--------_over_p_auto_------------------------------------------------------
 try:
     while True:

@@ -62,6 +62,19 @@ debounce_unused_input4_starttimer = 0
 debounce_unused_input5_starttimer = 0
 debounce_fill_starttimer = 0 
 debounce_drain_starttimer = 0
+
+external_noise_filtering_starttimer = 0
+external_noise_filtering_flag = 0
+
+pifacedigitalio.init()
+pifacedigitalio.digital_write_pullup(0,1)
+pifacedigitalio.digital_write_pullup(1,1)
+pifacedigitalio.digital_write_pullup(2,1)
+pifacedigitalio.digital_write_pullup(3,1)
+pifacedigitalio.digital_write_pullup(4,1)
+pifacedigitalio.digital_write_pullup(5,1)
+pifacedigitalio.digital_write_pullup(6,1)
+pifacedigitalio.digital_write_pullup(7,1)
 #--------_over_p_auto_------------------------------------------------------
 try:
     while True:
@@ -172,15 +185,15 @@ try:
             if fill_sw == 1 and fill_toggle == 0:
                 debounce_fill_flag = 1
                 debounce_fill_starttimer = time.time()
-                fill_state ^= 1
                 fill_toggle = 1
             elif fill_sw == 0 and fill_toggle == 1:
                 debounce_fill_flag = 1
-                debounce_fill_starttimer = time.time()
+                #debounce_fill_starttimer = 0
                 fill_toggle = 0
-
-        if (time.time() - debounce_fill_starttimer) >= 0.2:
-            debounce_fill_flag = 0
+        if (time.time() - debounce_fill_starttimer) >= 1:
+            if fill_sw == 1 and debounce_fill_flag == 1:
+                fill_state ^= 1
+                debounce_fill_flag = 0
 
         if debounce_drain_flag == 0:
             if drain_sw == 1 and drain_toggle == 0:
@@ -192,7 +205,6 @@ try:
                 debounce_drain_flag = 1
                 debounce_drain_starttimer = time.time()
                 drain_toggle = 0
-
         if (time.time() - debounce_drain_starttimer) >= 0.2:
             debounce_drain_flag = 0
 
@@ -206,7 +218,7 @@ try:
         pfd.output_pins[5].value = under_p_man_sw_state
         pfd.output_pins[6].value = fill_state
         pfd.output_pins[7].value = drain_state
-        sleep(0.05)
+        #sleep(0.05)
 
     # debugging print
         print("OP auto:" + str(over_p_auto_sw_state) 

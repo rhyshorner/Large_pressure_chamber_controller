@@ -66,6 +66,7 @@ debounce_drain_starttimer = 0
 external_noise_filtering_starttimer = 0
 external_noise_filtering_flag = 0
 
+pifacedigitalio.init()
 pifacedigitalio.digital_write_pullup(0,1)
 pifacedigitalio.digital_write_pullup(1,1)
 pifacedigitalio.digital_write_pullup(2,1)

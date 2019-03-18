@@ -27,6 +27,7 @@ LIBRARIES NEED TO INSTALL;
 RPI BOOT SETTINGS REQUIRED TO CHANGE
     -   sudo nano /etc/rc.local
         -add "python3 /home/pi/chambercontroller/controller.py &"(line 50) just above "exit 0"(line 52)
+```
 #--------------------------------------------------------------------
 #!/bin/sh -e
 #
@@ -51,14 +52,16 @@ python3 /home/pi/chambercontroller/controller.py &
 
 exit 0
 #--------------------------------------------------------------------
+```
+
     - to end the process in the GUI 
 
 open terminal then type;
-$ sudo ps -ax | grep python
+`$ sudo ps -ax | grep python`
 
 find the PID code preceeding "python3 /home/pi/chambercontroller/controller.py"
 then type that number into terminal; (in place of XXX)
-$ sudo kill XXX
+`$ sudo kill XXX`
 
 to get output, debugg and to see more options go to;
 https://learn.sparkfun.com/tutorials/how-to-run-a-raspberry-pi-program-on-startup/all

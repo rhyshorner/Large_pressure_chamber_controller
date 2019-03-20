@@ -7,6 +7,8 @@ import pifacedigitalio
 
 pfd = pifacedigitalio.PiFaceDigital() # creates a PiFace Digtal object
 
+debounce_time_delay = 0.1
+
 # Over pressure auto switch, for relief valve
 over_p_auto_sw_state = 0
 over_p_auto_sw_toggle = 0
@@ -28,6 +30,7 @@ under_p_auto_sw_state = 0
 under_p_auto_sw_toggle = 0
 under_p_auto_sw_filt = 0
 under_p_auto_sw = 0
+under_p_auto_pumpfeedback_flag = 0
 debounce_under_p_auto_falltimer = 0
 debounce_under_p_auto_risetimer = 0
 
@@ -114,12 +117,12 @@ try:
         if over_p_auto_sw_filt == 1:       #Debounce/Filter Falling Edge
             if over_p_auto_sw == 1:
                 debounce_over_p_auto_falltimer = time.time()
-            if (time.time() - debounce_over_p_auto_falltimer) > 0.2:
+            if (time.time() - debounce_over_p_auto_falltimer) > debounce_time_delay:
                 over_p_auto_sw_filt = 0
         if over_p_auto_sw_filt == 0:       #Debounce/Filter Rising Edge
             if over_p_auto_sw == 0:
                 debounce_over_p_auto_risetimer = time.time()
-            if (time.time() - debounce_over_p_auto_risetimer) > 0.2:
+            if (time.time() - debounce_over_p_auto_risetimer) > debounce_time_delay:
                 over_p_auto_sw_filt = 1       
         if over_p_auto_sw_filt == 1 and over_p_auto_sw_toggle == 0:       #Toggle Output State
             over_p_auto_sw_toggle = 1
@@ -132,12 +135,12 @@ try:
         if over_p_man_sw_filt == 1:       #Debounce/Filter Falling Edge
             if over_p_man_sw == 1:
                 debounce_over_p_man_falltimer = time.time()
-            if (time.time() - debounce_over_p_man_falltimer) > 0.2:
+            if (time.time() - debounce_over_p_man_falltimer) > debounce_time_delay:
                 over_p_man_sw_filt = 0
         if over_p_man_sw_filt == 0:       #Debounce/Filter Rising Edge
             if over_p_man_sw == 0:
                 debounce_over_p_man_risetimer = time.time()
-            if (time.time() - debounce_over_p_man_risetimer) > 0.2:
+            if (time.time() - debounce_over_p_man_risetimer) > debounce_time_delay:
                 over_p_man_sw_filt = 1       
         if over_p_man_sw_filt == 1 and over_p_man_sw_toggle == 0:       #Toggle Output State
             over_p_man_sw_toggle = 1
@@ -149,17 +152,18 @@ try:
     #------------------------------------------------------------------------
     # UNDER PRESSURE AND RELIEF
     #Under pressure pump - Auto
-        if under_p_auto_sw_filt == 1:       #Debounce/Filter Falling Edge
+        if under_p_auto_sw_filt == 1:  #Debounce/Filter Falling Edge
             if under_p_auto_sw == 1:
                 debounce_under_p_auto_falltimer = time.time()
-            if (time.time() - debounce_under_p_auto_falltimer) > 0.2:
+            if (time.time() - debounce_under_p_auto_falltimer) > debounce_time_delay:
                 under_p_auto_sw_filt = 0
         if under_p_auto_sw_filt == 0:       #Debounce/Filter Rising Edge
             if under_p_auto_sw == 0:
                 debounce_under_p_auto_risetimer = time.time()
-            if (time.time() - debounce_under_p_auto_risetimer) > 0.2:
-                under_p_auto_sw_filt = 1       
-        if under_p_auto_sw_filt == 1 and over_p_auto_sw_toggle == 0:       #Toggle Output State
+            if (time.time() - debounce_under_p_auto_risetimer) > debounce_time_delay:
+                under_p_auto_sw_filt = 1 
+
+        if under_p_auto_sw_filt == 1 and under_p_auto_sw_toggle == 0:       #Toggle Output State
             under_p_auto_sw_toggle = 1
             under_p_man_sw_state = 0
             under_p_auto_sw_state ^= 1
@@ -170,12 +174,12 @@ try:
         if under_p_man_sw_filt == 1:       #Debounce/Filter Falling Edge
             if under_p_man_sw == 1:
                 debounce_under_p_man_falltimer = time.time()
-            if (time.time() - debounce_under_p_man_falltimer) > 0.2:
+            if (time.time() - debounce_under_p_man_falltimer) > debounce_time_delay:
                 under_p_man_sw_filt = 0
         if under_p_man_sw_filt == 0:       #Debounce/Filter Rising Edge
             if under_p_man_sw == 0:
                 debounce_under_p_man_risetimer = time.time()
-            if (time.time() - debounce_under_p_man_risetimer) > 0.2:
+            if (time.time() - debounce_under_p_man_risetimer) > debounce_time_delay:
                 under_p_man_sw_filt = 1       
         if under_p_man_sw_filt == 1 and under_p_man_sw_toggle == 0:       #Toggle Output State
             under_p_man_sw_toggle = 1
@@ -188,12 +192,12 @@ try:
         if fill_sw_filt == 1:       #Debounce/Filter Falling Edge
             if fill_sw == 1:
                 debounce_fill_falltimer = time.time()
-            if (time.time() - debounce_fill_falltimer) > 0.2:
+            if (time.time() - debounce_fill_falltimer) > debounce_time_delay:
                 fill_sw_filt = 0
         if fill_sw_filt == 0:       #Debounce/Filter Rising Edge
             if fill_sw == 0:
                 debounce_fill_risetimer = time.time()
-            if (time.time() - debounce_fill_risetimer) > 0.2:
+            if (time.time() - debounce_fill_risetimer) > debounce_time_delay:
                 fill_sw_filt = 1       
         if fill_sw_filt == 1 and fill_toggle == 0:       #Toggle Output State
             fill_toggle = 1
@@ -205,12 +209,12 @@ try:
         if drain_sw_filt == 1:       #Debounce/Filter Falling Edge
             if drain_sw == 1:
                 debounce_drain_falltimer = time.time()
-            if (time.time() - debounce_drain_falltimer) > 0.2:
+            if (time.time() - debounce_drain_falltimer) > debounce_time_delay:
                 drain_sw_filt = 0
         if drain_sw_filt == 0:       #Debounce/Filter Rising Edge
             if drain_sw == 0:
                 debounce_drain_risetimer = time.time()
-            if (time.time() - debounce_drain_risetimer) > 0.2:
+            if (time.time() - debounce_drain_risetimer) > debounce_time_delay:
                 drain_sw_filt = 1       
         if drain_sw_filt == 1 and drain_toggle == 0:       #Toggle Output State
             drain_toggle = 1

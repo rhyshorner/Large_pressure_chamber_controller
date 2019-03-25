@@ -16,7 +16,7 @@ PiFace digital 2, from element14
         NOTE: need to modify `"/usr/lib/python3/dist-packages/pifacecommon/spi.py`
               need to add `"speed_hz=ctypes.c_uint32(100000)" see below;`
 
-             ``` # create the spi transfer struct
+             ```# create the spi transfer struct
                 transfer = spi_ioc_transfer(
                     tx_buf=ctypes.addressof(wbuffer),
                     rx_buf=ctypes.addressof(rbuffer),
@@ -66,7 +66,6 @@ then type that number into terminal; (in place of XXX)
 to get output, debugg and to see more options go to;
 https://learn.sparkfun.com/tutorials/how-to-run-a-raspberry-pi-program-on-startup/all
 
----------------------------------------------------------------------
 
 ##ADC
 1-Channel I2C 4-20mA Current Receiver Board w/ I2C Interface
@@ -75,3 +74,10 @@ https://learn.sparkfun.com/tutorials/how-to-run-a-raspberry-pi-program-on-startu
 ADS1115 ADC sample code;
 `https://learn.adafruit.com/raspberry-pi-analog-to-digital-converters/ads1015-slash-ads1115`
 
+on the rpi;
+```sudo apt-get update
+sudo apt-get install build-essential python-dev python-smbus git
+cd ~
+git clone https://github.com/adafruit/Adafruit_Python_ADS1x15.git
+cd Adafruit_Python_ADS1x15
+sudo python setup.py install```
